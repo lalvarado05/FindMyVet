@@ -1,14 +1,46 @@
-/* Paleta de colores global*/
+/* ==================================
+   variables globales - no tocar esto
+   ================================== */
 
 :root {
+    /* colores de la paleta q definimos */
     --color-azul-principal: #3b6ed7;
     --color-verde: #59c461;
     --color-gris-claro: #eceff1;
     --color-azul-grisaceo: #37474f;
     --color-blanco: #ffffff;
+    
+    /* estos son pa los textos grises */
+    --color-texto-secundario: #6b7c93;
+    --color-texto-terciario: #9ca3af;
+    
+    /* color de los bordes */
+    --color-borde: #e0e4e8;
+    
+    /* padding de las secciones (asi no lo repetimos mil veces) */
+    --seccion-padding: 80px 10vw;
+    --seccion-padding-tablet: 60px 20px;
+    --seccion-padding-mobile: 50px 15px;
+    
+    /* transicion generica */
+    --transicion: all 0.3s ease;
+    
+    /* border radius pa las tarjetas y eso */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-full: 50%;
+    
+    /* sombras - las saque de un tutorial jaja */
+    --sombra-card: 0 4px 20px rgba(0, 0, 0, 0.08);
+    --sombra-card-hover: 0 12px 30px rgba(59, 110, 215, 0.15);
+    --sombra-suave: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
-/* Reseteo general de estilos */
+/* ============================
+   reset basico 
+   ============================ */
+
 * {
     margin: 0;
     padding: 0;
@@ -25,7 +57,113 @@ body {
     background-color: #f5f7fa;
 }
 
-/* NavBar */
+/* ==============================
+   clases utilitarias 
+   estas se pueden reusar en varias partes
+   ============================== */
+
+/* contenedor para centrar el contenido */
+.section-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* header de cada seccion - titulo y subtitulo */
+.section-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-header h2 {
+    font-size: 36px;
+    color: var(--color-azul-grisaceo);
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.section-header p {
+    font-size: 18px;
+    color: var(--color-texto-secundario);
+}
+
+/* fondos - por si los necesitamos */
+.bg-gris {
+    background-color: var(--color-gris-claro);
+}
+
+.bg-blanco {
+    background-color: var(--color-blanco);
+}
+
+.bg-negro {
+    background-color: #000000;
+}
+
+/* tarjeta base - esto no lo usamos al final pero lo dejamos por si acaso */
+.card-base {
+    background: var(--color-blanco);
+    border-radius: var(--radius-md);
+    transition: var(--transicion);
+}
+
+.card-base:hover {
+    box-shadow: var(--sombra-suave);
+}
+
+/* tarjeta con borde */
+.card-bordered {
+    border: 1px solid var(--color-borde);
+}
+
+.card-bordered:hover {
+    border-color: transparent;
+}
+
+/* tarjeta con sombra */
+.card-shadow {
+    box-shadow: var(--sombra-card);
+}
+
+.card-shadow:hover {
+    box-shadow: var(--sombra-card-hover);
+}
+
+/* icono social - esto es pa los iconos de redes */
+.icon-social {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-full);
+    font-size: 18px;
+    text-decoration: none;
+    transition: var(--transicion);
+}
+
+.icon-social:hover {
+    background: var(--color-azul-principal);
+    color: var(--color-blanco);
+    transform: translateY(-3px);
+}
+
+/* texto secundario - no creo q lo usemos pero bueno */
+.text-secundario {
+    color: var(--color-texto-secundario);
+}
+
+.text-terciario {
+    color: var(--color-texto-terciario);
+}
+
+/* texto justificado */
+.text-justify {
+    text-align: justify;
+}
+
+/* ================
+   NAVBAR
+   ================ */
 
 .navbar {
     position: fixed;
@@ -36,12 +174,12 @@ body {
     backdrop-filter: blur(10px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-    transition: all 0.3s ease;
+    transition: var(--transicion);
 }
 
-/* Efecto de transparencia al scroll */
+/* efecto cuando se hace scroll - queda mas transparente */
 .navbar.scrolled {
-    background-color: rgba(255, 255, 255, 0.85);
+    background-color: rgba(255, 255, 255, 0.60);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
@@ -55,7 +193,7 @@ body {
     height: 70px;
 }
 
-/* Logo */
+/* logo y texto del logo */
 .navbar-logo a {
     display: flex;
     align-items: center;
@@ -64,7 +202,7 @@ body {
     color: var(--color-azul-principal);
     font-size: 28px;
     font-weight: 700;
-    transition: all 0.3s ease;
+    transition: var(--transicion);
 }
 
 .navbar-logo a:hover {
@@ -84,6 +222,7 @@ body {
     transform: scale(1.05);
 }
 
+/* el gradiente del texto - se ve cool */
 .logo-text {
     background: linear-gradient(135deg, var(--color-azul-principal), var(--color-verde));
     -webkit-background-clip: text;
@@ -91,7 +230,7 @@ body {
     background-clip: text;
 }
 
-/* Menu */
+/* menu de navegacion */
 .navbar-menu {
     display: flex;
     list-style: none;
@@ -108,7 +247,7 @@ body {
     color: var(--color-azul-grisaceo);
     font-weight: 500;
     font-size: 16px;
-    transition: all 0.3s ease;
+    transition: var(--transicion);
     padding: 8px 12px;
     border-radius: 4px;
     display: flex;
@@ -116,23 +255,12 @@ body {
     gap: 6px;
 }
 
-.nav-icon {
-    height: 20px;
-    width: 20px;
-    object-fit: contain;
-    transition: transform 0.3s ease, filter 0.3s ease;
-}
-
-.navbar-link:hover .nav-icon {
-    transform: scale(1.15);
-    filter: drop-shadow(0 0 3px rgba(59, 110, 215, 0.5));
-}
-
 .navbar-link:hover {
     color: var(--color-azul-principal);
     background-color: rgba(59, 110, 215, 0.1);
 }
 
+/* linea que aparece abajo del link - esto lo vi en un video */
 .navbar-link::after {
     content: '';
     position: absolute;
@@ -148,15 +276,18 @@ body {
     width: calc(100% - 24px);
 }
 
-/* Main    */
+/* ================
+   MAIN 
+   ================ */
 
 .main-content {
-    margin-top: 70px;
+    margin-top: 70px; /* esto es pa q no se tape con el navbar */
     padding-top: 0;
 }
 
-
-/* Set Encontrar vet */
+/* ================================
+   seccion hero - la del perro y gato
+   ================================ */
 
 .encontrar-vet-section {
     min-height: 600px;
@@ -189,6 +320,7 @@ body {
     opacity: 0.95;
 }
 
+/* botones - hay dos tipos */
 .btn-primary {
     background: var(--color-blanco);
     color: var(--color-azul-grisaceo);
@@ -196,9 +328,9 @@ body {
     padding: 16px 32px;
     font-size: 16px;
     font-weight: 600;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--transicion);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
@@ -212,7 +344,357 @@ body {
     transform: translateY(-1px);
 }
 
-/* Cosas cool */
+/* este es el boton de la seccion negra */
+.btn-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--color-blanco);
+    color: #000000;
+    padding: 14px 32px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: var(--transicion);
+}
+
+.btn-cta:hover {
+    background: #f0f0f0;
+    transform: translateY(-2px);
+}
+
+/* ==========================
+   seccion de mision y vision
+   ========================== */
+
+.mision-vision-section {
+    padding: var(--seccion-padding);
+    background-color: var(--color-gris-claro);
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+.info-card {
+    background: var(--color-blanco);
+    border-radius: var(--radius-lg);
+    padding: 40px 30px;
+    text-align: center;
+    box-shadow: var(--sombra-card);
+    transition: var(--transicion);
+}
+
+.info-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--sombra-card-hover);
+}
+
+/* el circulo con el icono */
+.card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(135deg, var(--color-azul-principal), var(--color-verde));
+    color: var(--color-blanco);
+    font-size: 28px;
+    margin-bottom: 24px;
+    transition: transform 0.3s ease;
+}
+
+.info-card:hover .card-icon {
+    transform: scale(1.1);
+}
+
+.info-card h3 {
+    font-size: 22px;
+    color: var(--color-azul-grisaceo);
+    margin-bottom: 16px;
+    font-weight: 600;
+}
+
+.info-card p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--color-texto-secundario);
+    text-align: justify;
+}
+
+/* ==================
+   seccion valores
+   ================== */
+
+.valores-section {
+    padding: var(--seccion-padding);
+    background-color: var(--color-blanco);
+}
+
+.valores-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.valor-card {
+    background: var(--color-blanco);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radius-md);
+    padding: 28px 24px;
+    text-align: left;
+    transition: var(--transicion);
+}
+
+.valor-card:hover {
+    box-shadow: var(--sombra-suave);
+    border-color: transparent;
+}
+
+.valor-card > i {
+    font-size: 40px;
+    color: var(--color-azul-grisaceo);
+    margin-bottom: 18px;
+    display: block;
+    text-align: center;
+}
+
+.valor-card h3 {
+    font-size: 18px;
+    color: var(--color-azul-grisaceo);
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.valor-card p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--color-texto-secundario);
+    text-align: justify;
+}
+
+/* ==================
+   seccion CTA 
+   la parte negra
+   ================== */
+
+.cta-section {
+    padding: var(--seccion-padding);
+    background-color: #000000;
+    text-align: center;
+}
+
+.cta-content {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.cta-section h2 {
+    font-size: 36px;
+    color: var(--color-blanco);
+    margin-bottom: 16px;
+    font-weight: 700;
+}
+
+.cta-section p {
+    font-size: 18px;
+    color: #a0aec0;
+    margin-bottom: 32px;
+    line-height: 1.6;
+}
+
+/* ==================
+   seccion equipo
+   ================== */
+
+.equipo-section {
+    padding: var(--seccion-padding);
+    background-color: var(--color-gris-claro);
+}
+
+.equipo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.miembro-card {
+    background: var(--color-blanco);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: var(--transicion);
+}
+
+.miembro-card:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* placeholder de la imagen - despues ponemos las fotos reales */
+.miembro-imagen {
+    aspect-ratio: 16/10;
+    background: linear-gradient(135deg, #e8ecf1, #d1d8e0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.miembro-imagen i {
+    font-size: 60px;
+    color: #a0aec0;
+}
+
+.miembro-card:hover .miembro-imagen i {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+
+.miembro-info {
+    padding: 24px;
+}
+
+.miembro-info h3 {
+    font-size: 20px;
+    color: var(--color-azul-grisaceo);
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.miembro-rol {
+    font-size: 14px;
+    color: var(--color-texto-secundario);
+    margin-bottom: 4px;
+}
+
+.miembro-institucion {
+    font-size: 14px;
+    color: var(--color-texto-terciario);
+    margin-bottom: 16px;
+}
+
+.miembro-social {
+    display: flex;
+    gap: 12px;
+}
+
+/* iconos de redes sociales del equipo */
+.social-link {
+    background: var(--color-gris-claro);
+    color: var(--color-azul-grisaceo);
+}
+
+/* estilos compartidos pa los iconos sociales - asi no repetimos codigo */
+.social-link,
+.footer-social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-full);
+    font-size: 18px;
+    text-decoration: none;
+    transition: var(--transicion);
+}
+
+.social-link:hover,
+.footer-social-link:hover {
+    background: var(--color-azul-principal);
+    color: var(--color-blanco);
+    transform: translateY(-3px);
+}
+
+/* ==============
+   FOOTER
+   ============== */
+
+.footer {
+    background-color: var(--color-gris-claro);
+    border-top: 1px solid var(--color-borde);
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 10vw 30px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-col h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-azul-grisaceo);
+    margin-bottom: 16px;
+}
+
+.footer-col p {
+    font-size: 14px;
+    color: var(--color-texto-secundario);
+    line-height: 1.6;
+    margin-bottom: 8px;
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    font-size: 14px;
+    color: var(--color-texto-secundario);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--color-azul-principal);
+}
+
+.footer-social {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+/* estos tienen borde a diferencia de los otros */
+.footer-social-link {
+    background: var(--color-blanco);
+    color: var(--color-azul-grisaceo);
+    border: 1px solid var(--color-borde);
+}
+
+.footer-social-link:hover {
+    border-color: var(--color-azul-principal);
+}
+
+.footer-bottom {
+    border-top: 1px solid var(--color-borde);
+    padding-top: 24px;
+    text-align: center;
+}
+
+.footer-bottom p {
+    font-size: 14px;
+    color: var(--color-texto-secundario);
+}
+
+/* ==================
+   animaciones cool
+   ================== */
 
 @keyframes fadeInDown {
     from {
@@ -236,9 +718,17 @@ body {
     }
 }
 
-/* parte responssive */
+/* ======================================
+   RESPONSIVE - tablet y eso (768px)
+   ====================================== */
 
 @media (max-width: 768px) {
+    /* cambiamos las variables para tablet */
+    :root {
+        --seccion-padding: var(--seccion-padding-tablet);
+    }
+
+    /* navbar mas chiquito */
     .navbar-container {
         height: 60px;
         padding: 0 15px;
@@ -247,10 +737,6 @@ body {
     .navbar-logo a {
         font-size: 20px;
         gap: 8px;
-    }
-
-    .logo-icon {
-        font-size: 24px;
     }
 
     .navbar-menu {
@@ -262,6 +748,7 @@ body {
         padding: 6px 10px;
     }
 
+    /* hero section */
     .encontrar-vet-section {
         min-height: 400px;
         padding: 40px 20px;
@@ -283,9 +770,132 @@ body {
         padding: 14px 24px;
         font-size: 14px;
     }
+
+    /* todas las secciones usan el mismo padding */
+    .mision-vision-section,
+    .valores-section,
+    .cta-section,
+    .equipo-section {
+        padding: var(--seccion-padding-tablet);
+    }
+
+    .section-header h2 {
+        font-size: 28px;
+    }
+
+    .section-header p {
+        font-size: 16px;
+    }
+
+    /* cards de mision vision - 1 columna */
+    .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .info-card {
+        padding: 30px 24px;
+    }
+
+    .card-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+    }
+
+    .info-card h3 {
+        font-size: 20px;
+    }
+
+    .info-card p {
+        font-size: 14px;
+    }
+
+    /* valores - 2 columnas */
+    .valores-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .valor-card {
+        padding: 24px 20px;
+    }
+
+    .valor-card > i {
+        font-size: 32px;
+        margin-bottom: 14px;
+    }
+
+    .valor-card h3 {
+        font-size: 16px;
+    }
+
+    .valor-card p {
+        font-size: 13px;
+    }
+
+    /* cta */
+    .cta-section h2 {
+        font-size: 28px;
+    }
+
+    .cta-section p {
+        font-size: 16px;
+        margin-bottom: 28px;
+    }
+
+    .btn-cta {
+        padding: 12px 28px;
+        font-size: 15px;
+    }
+
+    /* equipo - 2 columnas */
+    .equipo-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .miembro-info {
+        padding: 20px;
+    }
+
+    .miembro-info h3 {
+        font-size: 18px;
+    }
+
+    .miembro-imagen i {
+        font-size: 50px;
+    }
+
+    .social-link,
+    .footer-social-link {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
+
+    /* footer */
+    .footer-container {
+        padding: 40px 20px 24px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+    .footer-col:first-child {
+        grid-column: span 2;
+    }
 }
 
+/* ======================================
+   RESPONSIVE - celular (480px)
+   esto es pa pantallas bien chiquitas
+   ====================================== */
+
 @media (max-width: 480px) {
+    /* navbar aun mas pequeño */
     .navbar-logo a {
         font-size: 18px;
     }
@@ -299,6 +909,7 @@ body {
         padding: 4px 8px;
     }
 
+    /* hero centrado en mobile */
     .encontrar-vet-section {
         min-height: 500px;
         padding: 30px 15px;
@@ -319,6 +930,150 @@ body {
 
     .btn-primary {
         padding: 12px 20px;
+        font-size: 13px;
+    }
+
+    /* secciones con menos padding */
+    .mision-vision-section,
+    .valores-section,
+    .cta-section,
+    .equipo-section {
+        padding: var(--seccion-padding-mobile);
+    }
+
+    .section-header {
+        margin-bottom: 35px;
+    }
+
+    .section-header h2 {
+        font-size: 24px;
+    }
+
+    .section-header p {
+        font-size: 14px;
+    }
+
+    /* info cards */
+    .info-card {
+        padding: 25px 20px;
+    }
+
+    .card-icon {
+        width: 55px;
+        height: 55px;
+        font-size: 22px;
+        margin-bottom: 18px;
+    }
+
+    .info-card h3 {
+        font-size: 18px;
+        margin-bottom: 12px;
+    }
+
+    .info-card p {
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    /* valores - 1 columna en mobile */
+    .valores-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .valor-card {
+        padding: 22px 18px;
+    }
+
+    .valor-card > i {
+        font-size: 28px;
+        margin-bottom: 12px;
+    }
+
+    .valor-card h3 {
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+
+    .valor-card p {
+        font-size: 13px;
+    }
+
+    /* cta */
+    .cta-section h2 {
+        font-size: 24px;
+    }
+
+    .cta-section p {
+        font-size: 14px;
+        margin-bottom: 24px;
+    }
+
+    .btn-cta {
+        padding: 12px 24px;
+        font-size: 14px;
+        gap: 8px;
+    }
+
+    /* equipo - 1 columna */
+    .equipo-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .miembro-info {
+        padding: 18px;
+    }
+
+    .miembro-info h3 {
+        font-size: 17px;
+    }
+
+    .miembro-rol,
+    .miembro-institucion {
+        font-size: 13px;
+    }
+
+    .miembro-imagen i {
+        font-size: 45px;
+    }
+
+    .social-link,
+    .footer-social-link {
+        width: 34px;
+        height: 34px;
+        font-size: 15px;
+    }
+
+    /* footer - todo en 1 columna */
+    .footer-container {
+        padding: 35px 15px 20px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    .footer-col:first-child {
+        grid-column: span 1;
+    }
+
+    .footer-col h3 {
+        font-size: 15px;
+        margin-bottom: 12px;
+    }
+
+    .footer-col p,
+    .footer-links a {
+        font-size: 13px;
+    }
+
+    .footer-bottom {
+        padding-top: 20px;
+    }
+
+    .footer-bottom p {
         font-size: 13px;
     }
 }
