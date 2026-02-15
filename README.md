@@ -2,7 +2,7 @@
 
 ## Encuentra el Mejor Veterinario para tu Mascota
 
-![FindMyVet Banner](img\FMV_logo.png)
+![FindMyVet Banner](img/FMV_logo.png)
 
 ---
 
