@@ -1,0 +1,324 @@
+/* Paleta de colores global*/
+
+:root {
+    --color-azul-principal: #3b6ed7;
+    --color-verde: #59c461;
+    --color-gris-claro: #eceff1;
+    --color-azul-grisaceo: #37474f;
+    --color-blanco: #ffffff;
+}
+
+/* Reseteo general de estilos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--color-azul-grisaceo);
+    background-color: #f5f7fa;
+}
+
+/* NavBar */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+/* Efecto de transparencia al scroll */
+.navbar.scrolled {
+    background-color: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.navbar-container {
+    max-width: none;
+    margin: 0 auto;
+    padding: 0 10vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+}
+
+/* Logo */
+.navbar-logo a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--color-azul-principal);
+    font-size: 28px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.navbar-logo a:hover {
+    color: var(--color-verde);
+    transform: translateY(-2px);
+}
+
+.logo-image {
+    height: 50px;
+    width: auto;
+    display: inline-block;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.navbar-logo a:hover .logo-image {
+    transform: scale(1.05);
+}
+
+.logo-text {
+    background: linear-gradient(135deg, var(--color-azul-principal), var(--color-verde));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Menu */
+.navbar-menu {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+    align-items: center;
+}
+
+.navbar-item {
+    position: relative;
+}
+
+.navbar-link {
+    text-decoration: none;
+    color: var(--color-azul-grisaceo);
+    font-weight: 500;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    padding: 8px 12px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav-icon {
+    height: 20px;
+    width: 20px;
+    object-fit: contain;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.navbar-link:hover .nav-icon {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 3px rgba(59, 110, 215, 0.5));
+}
+
+.navbar-link:hover {
+    color: var(--color-azul-principal);
+    background-color: rgba(59, 110, 215, 0.1);
+}
+
+.navbar-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 12px;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-azul-principal), var(--color-verde));
+    transition: width 0.3s ease;
+}
+
+.navbar-link:hover::after {
+    width: calc(100% - 24px);
+}
+
+/* Main    */
+
+.main-content {
+    margin-top: 70px;
+    padding-top: 0;
+}
+
+
+/* Set Encontrar vet */
+
+.encontrar-vet-section {
+    min-height: 600px;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../img/photo-dog-cat.jpg') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 60px 10vw;
+    color: white;
+    position: relative;
+}
+
+.encontrar-vet-content {
+    max-width: 600px;
+    z-index: 2;
+    animation: fadeInUp 1s ease-out;
+}
+
+.encontrar-vet-content h2 {
+    font-size: 48px;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.encontrar-vet-content p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+    opacity: 0.95;
+}
+
+.btn-primary {
+    background: var(--color-blanco);
+    color: var(--color-azul-grisaceo);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    padding: 16px 32px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    background: #f7f9fb;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.btn-primary:active {
+    transform: translateY(-1px);
+}
+
+/* Cosas cool */
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* parte responssive */
+
+@media (max-width: 768px) {
+    .navbar-container {
+        height: 60px;
+        padding: 0 15px;
+    }
+
+    .navbar-logo a {
+        font-size: 20px;
+        gap: 8px;
+    }
+
+    .logo-icon {
+        font-size: 24px;
+    }
+
+    .navbar-menu {
+        gap: 15px;
+    }
+
+    .navbar-link {
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+
+    .encontrar-vet-section {
+        min-height: 400px;
+        padding: 40px 20px;
+    }
+
+    .encontrar-vet-content {
+        max-width: 100%;
+    }
+
+    .encontrar-vet-content h2 {
+        font-size: 32px;
+    }
+
+    .encontrar-vet-content p {
+        font-size: 16px;
+    }
+
+    .btn-primary {
+        padding: 14px 24px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-logo a {
+        font-size: 18px;
+    }
+
+    .navbar-menu {
+        gap: 10px;
+    }
+
+    .navbar-link {
+        font-size: 12px;
+        padding: 4px 8px;
+    }
+
+    .encontrar-vet-section {
+        min-height: 500px;
+        padding: 30px 15px;
+        justify-content: center;
+    }
+
+    .encontrar-vet-content {
+        text-align: center;
+    }
+
+    .encontrar-vet-content h2 {
+        font-size: 24px;
+    }
+
+    .encontrar-vet-content p {
+        font-size: 14px;
+    }
+
+    .btn-primary {
+        padding: 12px 20px;
+        font-size: 13px;
+    }
+}
