@@ -1,0 +1,9 @@
+[
+  {
+    "id": 1,
+    "nombre": "Usuario Demo",
+    "username": "demo",
+    "email": "demo@petzone.com",
+    "password": "demo123"
+  }
+]

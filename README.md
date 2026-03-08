@@ -54,36 +54,77 @@ Responsabilidad: Actuamos con ética, profesionalismo y atención al cliente de 
 ## Tecnologías Utilizadas
 
 - **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
+- **CSS Framework**: Bootstrap 5.3.3
+- **Preprocesador CSS**: Sass
+- **Librerías**: 
+  - Font Awesome (iconos)
+  - SweetAlert2 (alertas y notificaciones)
 - **Responsive Design**: Mobile-first approach
 - **Versionamiento**: Git & GitHub
 - **Desarrollo**: Visual Studio Code
 
-
+---
 
 ## Instalación y Uso
 
 ### Requisitos Previos:
+- Node.js (v14 o superior)
+- npm (viene incluido con Node.js)
 - Navegador web moderno (Chrome, Firefox, Edge, Safari)
-- Conexión a Internet
+- Conexión a Internet (para CDNs de Bootstrap, Font Awesome y SweetAlert2)
 
 ### Pasos para ejecutar:
 
 1. **Clonar el repositorio**
    ```bash
-   git clone https://github.com/usuario/findmyvet.git
-   cd findmyvet
+   git clone https://github.com/lalvarado05/PetZone.git
+   cd PetZone
    ```
 
-2. **Abrir la aplicación**
-   - Opción 1: Hacer doble clic en `index.html`
-   - Opción 2: Abrir con un servidor local o live server (recomendado)
+2. **Instalar dependencias**
+   ```bash
+   npm install
+   ```
+   Esto instalará:
+   - Sass (preprocesador CSS)
+   - Bootstrap (framework CSS)
+
+3. **Compilar los estilos SASS**
+   
+   Para compilar una vez:
+   ```bash
+   npm run sass:build
+   ```
+   
+   Para compilar automáticamente al guardar cambios:
+   ```bash
+   npm run sass:watch
+   ```
+
+4. **Abrir la aplicación**
+   - Opción 1: Abrir `index.html` directamente en el navegador
+   - Opción 2: Usar un servidor local (recomendado):
+     ```bash
+     # Con Python 3
+     python -m http.server 8000
+     
+     # O con Node.js (si tienes http-server instalado)
+     npx http-server
+     ```
+     Luego acceder a `http://localhost:8000`
+
+
+### Scripts Disponibles
+
+- `npm run sass:build` - Compila SASS a CSS una vez
+- `npm run sass:watch` - Compila SASS automáticamente al detectar cambios
 
 ---
 
 ## Licencia
 
 Este proyecto está desarrollado como parte del curso **Programación Web Avanzada** del **CENFOTEC**.
-Todos los derechos reservados © 2026 FindMyVet
+Todos los derechos reservados © 2026 PetZone
 
 ---
 
@@ -98,11 +139,11 @@ Todos los derechos reservados © 2026 FindMyVet
 ---
 
 **Segunda Entrega - Objetivos Completados:**
-Pendiente**
+- Pendiente
 
 **Versión**: 1.1
 **Última actualización**: Marzon 8, 2026
 
 ---
 
-¡Gracias por visitar FindMyVet! 🐾
+¡Gracias por visitar PetZone! 🐾
