@@ -1,10 +1,15 @@
+@use 'sass:color'
 @use 'variables' as *
 
+
+html
+  height: 100%
 
 body
   color: $color-azul-grisaceo
   background-color: #f5f7fa
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
+  min-height: 100vh
 
 .logo-image
   height: 60px
@@ -226,3 +231,116 @@ footer
   font-weight: 600;
   font-size: 18px;
 
+.login-main
+  padding-top: 150px !important
+  margin-top: 0 !important
+  display: flex
+  flex-direction: column
+
+.login-card
+  border-radius: $radius-lg
+  overflow: hidden
+
+.nav-pills
+  .nav-link
+    color: $color-texto-secundario
+    border-radius: $radius-md
+    transition: all 0.3s ease
+    &:hover
+      color: $color-azul-principal
+      background-color: rgba(59, 110, 215, 0.1)
+    &.active
+      background-color: $color-azul-principal
+      color: $color-blanco
+
+.form-outline
+  position: relative
+  .form-control
+    border-radius: $radius-sm
+    border: 1px solid $color-borde
+    padding: 12px 16px
+    transition: all 0.3s ease
+    &:focus
+      border-color: $color-azul-principal
+      box-shadow: 0 0 0 0.2rem rgba(59, 110, 215, 0.25)
+    &.is-invalid
+      border-color: #dc3545
+      &:focus
+        border-color: #dc3545
+        box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25)
+
+  .form-label
+    position: absolute
+    top: 12px
+    left: 16px
+    color: $color-texto-secundario
+    transition: all 0.3s ease
+    pointer-events: none
+    background-color: $color-blanco
+    padding: 0 4px
+    margin-bottom: 0
+
+  .form-control:focus ~ .form-label,
+  .form-control:not(:placeholder-shown) ~ .form-label
+    top: -8px
+    left: 12px
+    font-size: 0.75rem
+    color: $color-azul-principal
+
+
+
+.login-submit-btn,
+.register-submit-btn
+  background-color: $color-azul-principal
+  border: none
+  border-radius: $radius-sm
+  padding: 12px
+  font-weight: 600
+  transition: all 0.3s ease
+  &:hover
+    background-color: color.adjust($color-azul-principal, $lightness: -10%)
+    transform: translateY(-2px)
+    box-shadow: 0 4px 12px rgba(59, 110, 215, 0.3)
+  &:disabled
+    opacity: 0.6
+    cursor: not-allowed
+    transform: none
+
+// Links
+a.switch-tab
+  color: $color-azul-principal
+  font-weight: 500
+  &:hover
+    color: color.adjust($color-azul-principal, $lightness: -10%)
+    text-decoration: underline !important
+
+// Checkbox styling
+.form-check-input
+  &:checked
+    background-color: $color-azul-principal
+    border-color: $color-azul-principal
+  &:focus
+    border-color: $color-azul-principal
+    box-shadow: 0 0 0 0.2rem rgba(59, 110, 215, 0.25)
+
+body.d-flex footer
+  margin-top: auto
+
+// Responsive para login
+@media (max-width: 768px)
+  .login-main
+    padding-top: 80px
+  .login-card
+    .card-body
+      padding: 2rem !important
+
+@media (max-width: 480px)
+  .login-main
+    padding-top: 70px
+  .login-card
+    .card-body
+      padding: 1.5rem !important
+  .nav-pills
+    .nav-link
+      font-size: 0.9rem
+      padding: 0.5rem 0.75rem
