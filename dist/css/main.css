@@ -1,7 +1,12 @@
+html {
+  height: 100%;
+}
+
 body {
   color: #37474f;
   background-color: #f5f7fa;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  min-height: 100vh;
 }
 
 .logo-image {
@@ -155,6 +160,135 @@ footer .btn-white:hover {
   }
   .hero-section .hero-content h1 {
     font-size: 26px;
+  }
+}
+.login-main {
+  padding-top: 150px !important;
+  margin-top: 0 !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-card {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.nav-pills .nav-link {
+  color: #6b7c93;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+.nav-pills .nav-link:hover {
+  color: #3b6ed7;
+  background-color: rgba(59, 110, 215, 0.1);
+}
+.nav-pills .nav-link.active {
+  background-color: #3b6ed7;
+  color: #ffffff;
+}
+
+.form-outline {
+  position: relative;
+}
+.form-outline .form-control {
+  border-radius: 8px;
+  border: 1px solid #e0e4e8;
+  padding: 12px 16px;
+  transition: all 0.3s ease;
+}
+.form-outline .form-control:focus {
+  border-color: #3b6ed7;
+  box-shadow: 0 0 0 0.2rem rgba(59, 110, 215, 0.25);
+}
+.form-outline .form-control.is-invalid {
+  border-color: #dc3545;
+}
+.form-outline .form-control.is-invalid:focus {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+.form-outline .form-label {
+  position: absolute;
+  top: 12px;
+  left: 16px;
+  color: #6b7c93;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  background-color: #ffffff;
+  padding: 0 4px;
+  margin-bottom: 0;
+}
+.form-outline .form-control:focus ~ .form-label,
+.form-outline .form-control:not(:placeholder-shown) ~ .form-label {
+  top: -8px;
+  left: 12px;
+  font-size: 0.75rem;
+  color: #3b6ed7;
+}
+
+.login-submit-btn,
+.register-submit-btn {
+  background-color: #3b6ed7;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.login-submit-btn:hover,
+.register-submit-btn:hover {
+  background-color: rgb(37.7966101695, 85.9872881356, 185.2033898305);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 110, 215, 0.3);
+}
+.login-submit-btn:disabled,
+.register-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+a.switch-tab {
+  color: #3b6ed7;
+  font-weight: 500;
+}
+a.switch-tab:hover {
+  color: rgb(37.7966101695, 85.9872881356, 185.2033898305);
+  text-decoration: underline !important;
+}
+
+.form-check-input:checked {
+  background-color: #3b6ed7;
+  border-color: #3b6ed7;
+}
+.form-check-input:focus {
+  border-color: #3b6ed7;
+  box-shadow: 0 0 0 0.2rem rgba(59, 110, 215, 0.25);
+}
+
+body.d-flex footer {
+  margin-top: auto;
+}
+
+@media (max-width: 768px) {
+  .login-main {
+    padding-top: 80px;
+  }
+  .login-card .card-body {
+    padding: 2rem !important;
+  }
+}
+@media (max-width: 480px) {
+  .login-main {
+    padding-top: 70px;
+  }
+  .login-card .card-body {
+    padding: 1.5rem !important;
+  }
+  .nav-pills .nav-link {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem;
   }
 }
 
