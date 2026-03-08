@@ -7,7 +7,8 @@ body {
 .logo-image {
   height: 60px;
   width: auto;
-  object-fit: contain;
+  -o-object-fit: contain;
+     object-fit: contain;
   transform: scale(2);
   transform-origin: center;
 }
@@ -121,7 +122,8 @@ html {
 }
 .miembro-card .card-img-top {
   height: 240px;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .miembro-card:hover {
@@ -157,5 +159,96 @@ footer .btn-white:hover {
     font-size: 26px;
   }
 }
+/*Especialista*/
+.search-bar {
+  border-radius: 12px;
+  border: 1px solid #e0e4e8;
+  padding: 12px 16px;
+}
 
-/*# sourceMappingURL=main.css.map */
+.filter-badge {
+  border-radius: 8px;
+  padding: 6px 12px;
+  border: 1px solid #e0e4e8;
+}
+
+.product-main-card {
+  border-radius: 12px;
+  border: 1px solid #e5e5e5;
+}
+
+.product-main-image {
+  max-width: 200px;
+  padding: 20px;
+}
+
+.product-price {
+  font-size: 22px;
+  font-weight: 600;
+  color: #198754;
+}
+
+.product-counter {
+  gap: 10px;
+}
+
+.cart-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #0d6efd;
+  color: white;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 26px;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+}
+
+.cart-button:hover {
+  background-color: #0b5ed7;
+}
+
+#cartCount {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: red;
+  color: white;
+  font-size: 12px;
+  width: 20px;
+  height: 20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+}
+
+
+/*Pagina confirmacion*/
+.main-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.confirmation-card {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  border: 1px solid #e5e5e5;
+  width: 100%;
+  max-width: 600px;
+}
+
+.total-line {
+  font-weight: 600;
+  font-size: 18px;
+}/*# sourceMappingURL=main.css.map */
