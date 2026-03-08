@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FindMyVet - Encuentra tu Veterinario</title>
+  <title>PetZone - Tu tienda para mascotas</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://kit.fontawesome.com/4e4b815a9a.js" crossorigin="anonymous"></script>
@@ -16,8 +16,8 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
     <div class="container-fluid px-5">
       <a class="navbar-brand d-flex align-items-center gap-2" href="#home">
-        <img src="img/FMV_logo.png" alt="FindMyVet Logo" class="logo-image">
-        <span class="logo-text">FindMyVet</span>
+        <img src="img/petZone-logo.png" alt="PetZone Logo" class="logo-image">
+        <span class="logo-text">PetZone</span>
       </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
@@ -30,34 +30,36 @@
           <li class="nav-item">
             <a class="nav-link d-flex align-items-center" href="#home">
               <i class="fa-regular fa-house me-1"></i> Inicio
-            </a>
-          </li>
+                    </a>
+                </li>
           <li class="nav-item">
-            <a class="nav-link d-flex align-items-center" href="#encontrar-vet">
-              <i class="fa-solid fa-stethoscope me-1"></i> Encontrar Vet
-            </a>
-          </li>
+            <a class="nav-link d-flex align-items-center" href="#productos">
+              <i class="fa-solid fa-bag-shopping me-1"></i> Productos
+                    </a>
+                </li>
           <li class="nav-item">
             <a class="nav-link d-flex align-items-center" href="#perfil">
               <i class="fa-solid fa-user me-1"></i> Perfil
-            </a>
-          </li>
-        </ul>
+                    </a>
+                </li>
+            </ul>
       </div>
-    </div>
-  </nav>
+        </div>
+    </nav>
 
   <!-- MAIN -->
-  <main class="mt-5 pt-5">
+  <main id="home">
     <!-- HERO -->
-    <section id="encontrar-vet" class="hero-section d-flex align-items-center">
+    <section id="productos" class="hero-section d-flex align-items-center">
       <div class="container px-5">
         <div class="row">
           <div class="col-lg-7 text-white hero-content">
-            <h1 class="display-5 fw-bold">Encuentra veterinarios de confianza para tus mascotas</h1>
-            <p class="lead mt-3">Conecta con veterinarios experimentados y agenda tu cita con facilidad. La salud de
-              tu mascota es nuestra prioridad.</p>
-            <a href="#encontrar-vet" class="btn btn-light btn-lg mt-3 shadow-sm">Encuentra un veterinario cerca de ti →
+            <h1 class="display-5 fw-bold">Todo lo que tu mascota necesita, en un solo lugar</h1>
+            <p class="lead mt-3">
+              Compra alimentos, juguetes, accesorios, higiene y más. Experiencia rápida, segura y disponible 24/7.
+            </p>
+            <a href="#productos" class="btn btn-light btn-lg mt-3 shadow-sm">
+              Explorar productos →
             </a>
           </div>
         </div>
@@ -68,20 +70,20 @@
     <section class="py-5 bg-light">
       <div class="container">
         <div class="section-header text-center mb-4">
-          <h2 class="h2 fw-bold">¿Por qué elegir FindMyVet?</h2>
-          <p class="text-muted">Comprometidos con el bienestar de tus mascotas</p>
+          <h2 class="h2 fw-bold">¿Por qué elegir PetZone?</h2>
+          <p class="text-muted">Compra confiable para el bienestar de tu mascota</p>
         </div>
 
         <div class="row g-4">
           <div class="col-md-6">
             <div class="card h-100 border-0 shadow-sm info-card">
               <div class="card-body text-center">
-                <div class="card-icon mb-3"><i class="fa-solid fa-rocket"></i></div>
+                <div class="card-icon card-icon-mision mb-3"><i class="fa-solid fa-rocket"></i></div>
                 <h5 class="card-title">Nuestra Misión</h5>
-                <p class="card-text text-muted text-justify">Conectar a los dueños de mascotas con veterinarios
-                  certificados de manera rápida, segura y disponible 24/7, facilitando el acceso a atención
-                  veterinaria confiable —especialmente en situaciones de urgencia— a través de una plataforma digital
-                  eficiente y fácil de usar.</p>
+                <p class="card-text text-muted text-justify">
+                  Brindar a los dueños de mascotas acceso fácil, rápido y seguro a productos de alta calidad, mejorando
+                  el bienestar animal a través de una plataforma digital eficiente, confiable y disponible 24/7.
+                </p>
               </div>
             </div>
           </div>
@@ -89,12 +91,13 @@
           <div class="col-md-6">
             <div class="card h-100 border-0 shadow-sm info-card">
               <div class="card-body text-center">
-                <div class="card-icon mb-3"><i class="fa-solid fa-eye"></i></div>
+                <div class="card-icon card-icon-vision mb-3"><i class="fa-solid fa-eye"></i></div>
                 <h5 class="card-title">Nuestra Visión</h5>
-                <p class="card-text text-muted text-justify">Ser la plataforma líder en atención veterinaria digital,
-                  reconocida por brindar respuestas inmediatas, veterinarios de alta calidad y tranquilidad a los
-                  usuarios, transformando la forma en que las personas acceden al cuidado de la salud animal en cualquier
-                  momento y lugar.</p>
+                <p class="card-text text-muted text-justify">
+                  Ser la tienda en línea líder en productos para mascotas, reconocida por su variedad, calidad y excelente
+                  experiencia de compra, transformando la manera en que las personas adquieren artículos para el cuidado y
+                  felicidad de sus mascotas.
+                </p>
               </div>
             </div>
           </div>
@@ -107,33 +110,36 @@
       <div class="container">
         <div class="section-header text-center mb-4">
           <h2 class="h2 fw-bold">Nuestros Valores</h2>
-          <p class="text-muted">Los principios que guían cada acción en FindMyVet</p>
+          <p class="text-muted">Los principios que guían cada acción en PetZone</p>
         </div>
 
         <div class="row g-4 valores-grid">
           <div class="col-md-6 col-lg-3">
             <div class="card valor-card h-100 text-center p-3">
               <div class="mb-3"><i class="fa-solid fa-award fa-2x"></i></div>
-              <h6 class="fw-semibold">Calidad Profesional</h6>
-              <p class="text-muted small">Trabajamos únicamente con veterinarios certificados y evaluados para garantizar
-                un servicio confiable y seguro.</p>
+              <h6 class="fw-semibold">Calidad Garantizada</h6>
+              <p class="text-muted small">
+                Ofrecemos productos seleccionados bajo altos estándares para asegurar la salud y el bienestar de las mascotas.
+              </p>
             </div>
           </div>
 
           <div class="col-md-6 col-lg-3">
             <div class="card valor-card h-100 text-center p-3">
-              <div class="mb-3"><i class="fa-solid fa-handshake fa-2x"></i></div>
+              <div class="mb-3"><i class="fa-solid fa-lock fa-2x"></i></div>
               <h6 class="fw-semibold">Confianza</h6>
-              <p class="text-muted small">Construimos relaciones basadas en la transparencia, la seguridad y el
-                cumplimiento de altos estándares.</p>
+              <p class="text-muted small">
+                Garantizamos pagos seguros, transparencia en los procesos y protección de datos.
+              </p>
             </div>
           </div>
 
           <div class="col-md-6 col-lg-3">
             <div class="card valor-card h-100 text-center p-3">
               <div class="mb-3"><i class="fa-solid fa-heart fa-2x"></i></div>
-              <h6 class="fw-semibold">Compromiso Animal</h6>
-              <p class="text-muted small">Cada decisión está guiada por el cuidado, la salud y la vida de las mascotas.
+              <h6 class="fw-semibold">Bienestar Animal</h6>
+              <p class="text-muted small">
+                Cada producto está pensado para mejorar la calidad de vida de las mascotas.
               </p>
             </div>
           </div>
@@ -142,7 +148,8 @@
             <div class="card valor-card h-100 text-center p-3">
               <div class="mb-3"><i class="fa-solid fa-scale-balanced fa-2x"></i></div>
               <h6 class="fw-semibold">Responsabilidad</h6>
-              <p class="text-muted small">Actuamos con ética, seriedad y respeto hacia usuarios, veterinarios y mascotas.
+              <p class="text-muted small">
+                Actuamos con ética, profesionalismo y atención al cliente de excelencia.
               </p>
             </div>
           </div>
@@ -155,7 +162,7 @@
       <div class="container">
         <div class="section-header text-center mb-4">
           <h2 class="h2 fw-bold">Nuestro Equipo</h2>
-          <p class="text-muted">Conoce a los desarrolladores detrás de FindMyVet</p>
+          <p class="text-muted">Conoce a los desarrolladores detrás de PetZone</p>
         </div>
 
         <div class="row g-4 equipo-grid">
@@ -213,38 +220,41 @@
       </div>
     </section>
 
-    <!-- CTA NEGRA -->
+    <!-- CTA -->
     <section class="py-5 bg-dark text-center text-white">
       <div class="container">
-        <h2 class="fw-bold">¿Listo para cuidar a tu mascota?</h2>
-        <p class="text-muted mb-4">Únete a miles de dueños de mascotas que confían en FindMyVet para sus necesidades
-          veterinarias.</p>
-        <a href="#encontrar-vet" class="btn btn-light btn-lg">Encontrar Veterinarios <i
-            class="fa-solid fa-arrow-right ms-2"></i></a>
-      </div>
-    </section>
-  </main>
+        <h2 class="fw-bold">¿Listo para consentir a tu mascota?</h2>
+        <p class="text-muted mb-4">
+          Únete a miles de dueños de mascotas que confían en PetZone para comprar productos de calidad.
+        </p>
+        <a href="#productos" class="btn btn-light btn-lg">
+          Ver productos <i class="fa-solid fa-arrow-right ms-2"></i>
+        </a>
+            </div>
+        </section>
+    </main>
 
   <!-- FOOTER -->
   <footer class="bg-light border-top">
     <div class="container py-5">
       <div class="row gy-4">
         <div class="col-md-4">
-          <h6 class="fw-bold">Acerca de FindMyVet</h6>
-          <p class="text-muted">Conectando dueños de mascotas con veterinarios de confianza para brindar atención de
-            calidad.</p>
+          <h6 class="fw-bold">Acerca de PetZone</h6>
+          <p class="text-muted">
+            Tu tienda en línea para productos de mascotas: calidad, variedad y compra segura.
+          </p>
         </div>
         <div class="col-md-4">
           <h6 class="fw-bold">Enlaces Rápidos</h6>
           <ul class="list-unstyled">
             <li><a href="#home" class="text-muted text-decoration-none">Inicio</a></li>
-            <li><a href="#encontrar-vet" class="text-muted text-decoration-none">Encontrar Veterinario</a></li>
+            <li><a href="#productos" class="text-muted text-decoration-none">Productos</a></li>
             <li><a href="#perfil" class="text-muted text-decoration-none">Mi Perfil</a></li>
           </ul>
         </div>
         <div class="col-md-4">
           <h6 class="fw-bold">Contacto</h6>
-          <p class="text-muted mb-1">Email: soporte@findmyvet.com</p>
+          <p class="text-muted mb-1">Email: soporte@petzone.com</p>
           <p class="text-muted mb-2">Teléfono: (506) 1234-5678</p>
           <div class="d-flex gap-2">
             <a href="#" class="btn btn-white border"><i class="fa-brands fa-instagram"></i></a>
@@ -255,13 +265,13 @@
       </div>
 
       <div class="text-center mt-4 border-top pt-3 small text-muted">
-        © 2026 FindMyVet. Todos los derechos reservados.
+        © 2026 PetZone. Todos los derechos reservados.
       </div>
     </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/main.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>

@@ -1,4 +1,7 @@
 ## PetZone
+
+![PetZone Logo](img/petZone-logo.png)
+
 Todo lo que tu Mascota Necesita en un Solo Lugar
 
 ## Descripción del Proyecto
