@@ -1,0 +1,240 @@
+[
+  {
+    "id": 1,
+    "name": "Cat and Kitten Chicken, Salmon and Liver",
+    "marca": "NutriSource",
+    "type": "Gato",
+    "category": "Alimento",
+    "peso": "2kg",
+    "price_crc": 11702,
+    "description": "Comida sana para gatos y gatitos.",
+    "image": "nutrisourceCatandKittenChicken.png"
+  }, 
+    {
+    "id": 2,
+    "name": "Adulto Gato Pollo",
+    "marca": "Balance",
+    "type": "Gato",
+    "category": "Alimento",
+    "peso": "3.7kg",
+    "price_crc": 6021,
+    "description": "Balance - Adulto Gato Pollo",
+    "image": "Balance-Adulto-10kg.png"
+  },
+    {
+    "id": 3,
+    "name": "Alimento Húmedo Atún",
+    "marca": "Fancy Feast",
+    "type": "Gato",
+    "category": "Atún",
+    "peso": "200gr",
+    "price_crc": 1140,
+    "description": "El amor se sirve todos los días. Eleva la experiencia gastronómica de tu gato con el nuevo Purina® Fancy Feast® Casserole Atún y Salmón",
+    "image": "fancy-feast-casserole-con-atun-y-salmon_0.png"
+  },
+    {
+    "id": 4,
+    "name": "Indoor Arroz y Pollo",
+    "marca": "Diamond",
+    "type": "Gato",
+    "category": "Alimento",
+    "peso": "2kg",
+    "price_crc": 15797,
+    "description": "Comida sana para gatos y gatitos.",
+    "image": "DNindoorcat_rev.png"
+  },
+
+      {
+    "id": 5,
+    "name": "Alimento de Pollo para gatos bebéa",
+    "marca": "Hills",
+    "type": "Gato",
+    "category": "Alimento",
+    "peso": "1.5kg",
+    "price_crc": 15400,
+    "description": "El alimento seco Hill’s™ Science Diet™ Kitten está cuidadosamente formulado para las necesidades de desarrollo de los gatitos",
+    "image": "sd-feline-kitten-dry-productShot_zoom.png"
+  },
+
+  {
+    "id": 6,
+    "name": "Collar de cono de gato",
+    "marca": "Isabelino",
+    "type": "Gato",
+    "category": "Accesorio",
+    "peso": null,
+    "price_crc": 13000,
+    "description": "Collar de cono de gato, lindo collar de recuperación impermeable para gatos, antimordeduras, cicatrización de heridas, collar isabelino para gatos, diseño de flores moradas para todas las estaciones",
+    "image": "cuelloGato.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Golosinas para gatos",
+    "marca": "Wildly Natural",
+    "type": "Gato",
+    "category": "Snacks",
+    "peso": "2.5oz",
+    "price_crc": 2500,
+    "description": "Wildly Natural Golosinas para gatos, 2.5 onzas, sabor a salmón",
+    "image": "treatsGatos.png"
+  },
+
+{
+    "id": 8,
+    "name": "Biscuits de Gato Salmón",
+    "marca": "Petgüel",
+    "type": "Gato",
+    "category": "Snacks",
+    "peso": "180gr",
+    "price_crc": 1500,
+    "description": "Las Petgüel Biscuits de Gato Salmón son el snack perfecto para gatos de todas las edades. Ricas en proteína y con un delicioso sabor natural, son ideales para premiar y entrenar a tu mascota.",
+    "image": "Petguel-Biscuits-de-Gato-Salmon.png"
+  },
+
+
+
+{
+    "id": 9,
+    "name": "Juego de arnés y correa",
+    "marca": "Halypet",
+    "type": "Gato",
+    "category": "Accesorio",
+    "peso": null,
+    "price_crc": 12500,
+    "description": "Halypet Juego de arnés y correa para gatos – MAX Safety 4ª generación mejorado, a prueba de escapes, ajustable, cómodo chaleco suave, fácil de llevar arnés para gatito con tira reflectante para gatos",
+    "image": "gatoarnes.png"
+  },
+
+{
+    "id": 10,
+    "name": "Collar de gato con AirTag reflectante",
+    "marca": "Happy Paws",
+    "type": "Gato",
+    "category": "Accesorio",
+    "peso": null,
+    "price_crc": 5000,
+    "description": "Collar de gato con AirTag reflectante, collar integrado con rastreador de gato y soporte para AirTag con campanilla, collares GPS de gato con banda elástica de seguridad para gatos niñas y niños",
+    "image": "collarGato.png"
+  },
+
+  {
+    "id": 11,
+    "name": "Rascador Baltimore",
+    "marca": "MPets",
+    "type": "Gato",
+    "category": "Accesorio",
+    "peso": null,
+    "price_crc": 13000,
+    "description": "Rascador de cartón y fibras 100% recicladas y reciclables. Evita los rasguños en cortinas, muebles y alfombras.",
+    "image": "rascadorFormaGato.png"
+  },
+
+  {
+    "id": 12,
+    "name": "Raton Caballero con Silvervine",
+    "marca": "Mimo",
+    "type": "Gato",
+    "category": "Accesorio",
+    "peso": null,
+    "price_crc": 4078,
+    "description": "Los juguetes Mimo garantizan diversión mientras no estemos con ellas. Los juguetes Mimo animan a tu mascota a canalizar energía, entretenerse y divertirse.",
+    "image": "PP236_02.png"
+  },
+
+
+   {
+    "id": 13,
+    "name": "Alimento de dieta Adult +7",
+    "marca": "Hill's Science Diet",
+    "type": "Perro",
+    "category": "Alimento",
+    "peso": "15kg",
+    "price_crc": 70000,
+    "description": "Hill's Science Diet Adult 7+",
+    "image": "713uvvCtRXL._AC_UL640_QL65_.png"
+  },
+
+    {
+    "id": 14,
+    "name": "Alimento de dieta Diet Adulto 1-6",
+    "marca": "Hill's Science Diet",
+    "type": "Perro",
+    "category": "Alimento",
+    "peso": "15kg",
+    "price_crc": 60000,
+    "description": "Hill's Science Diet Adulto 1-6, Adulto 1-6 Premium Nutrition, Alimento seco para perros",
+    "image": "hillsPerro2.png"
+  },
+
+      {
+    "id": 15,
+    "name": "Alimento Prescripción w/d Alimento Húmedo",
+    "marca": "Hill's Prescription Diet",
+    "type": "Perro",
+    "category": "Alimento",
+    "peso": "13 onzas",
+    "price_crc": 5000,
+    "description": "Hill's Prescription Diet w/d Alimento húmedo para perros digestivo/peso/glucosa/urinario multibeneficio con pollo",
+    "image": "alimentohumedoPerro.png"
+  },
+      {
+    "id": 16,
+    "name": "Hill's Prescription Diet Golosinas",
+    "marca": "Hill's Prescription Diet",
+    "type": "Perro",
+    "category": "Alimento",
+    "peso": "13 onzas",
+    "price_crc": 5000,
+    "description": "Las golosinas metabólicas para perros de Prescription Diet son delicias sabrosas, saludables y gratificantes para perros adultos para apoyar la pérdida de peso saludable y el mantenimiento del peso. Prescription Diet Metabolic Canine Treats son delicias sabrosas, saludables y gratificantes para perros adultos para apoyar la pérdida de peso saludable y el mantenimiento del peso. Prescription Diet Metabolic Canine Treats son un gran complemento para los perros que se alimentan con prescription Diet C/D Multicare, C/D Multicare + peso metabólico, j/d, peso metabólico + j/d, r/d o w/d comida para perros con beneficios múltiples. También son adecuados para todos los perros adultos y mayores sanos o perros que se alimentan Science Diet Adult Perfect Weight o Science Diet Adult Light alimentos para perros. A tu perro le encantarán estas sabrosas galletas crujientes en forma de hueso que son moderadas en calorías, proteínas y fósforo, bajas en sodio y tienen mayor fibra. Están diseñados para complementar muchos alimentos prescripcionados y, cuando se alimentan según las indicaciones, pueden ayudar a mantener una pérdida de peso saludable y mantenimiento. Estas golosinas también están formuladas para ser compatibles y complementarias con los productos Prescription Diet que tienen el S+OXSHIELD.",
+    "image": "treatsPerro.png"
+  },
+
+
+        {
+    "id": 17,
+    "name": "Juguete bola para perros",
+    "marca": "HDSX",
+    "type": "Perro",
+    "category": "Accesorio",
+    "peso": null,
+    "price_crc": 2000,
+    "description": "Juguetes chirriantes para perros, pelotas chirriantes de goma de látex suave para cachorros",
+    "image": "71U+xv6HHRL._AC_UL640_QL65_.png"
+  },
+
+        {
+    "id": 18,
+    "name": "Best Pet Supplies Juguete Interactivo",
+    "marca": "Best Pet Supplies",
+    "type": "Perro",
+    "category": "Accesorio",
+    "peso": null,
+    "price_crc": 8000,
+    "description": "Best Pet Supplies Juguete Chirriante Interactivo para Masticar para Perros, Juguetes Ideales para Perros Masticadores, Perros Pequeños, Medianos y Grandes, y Amantes del Fetch - Pollo Crujiente",
+    "image": "juguetePerro1.png"
+  },
+  {
+    "id": 19,
+    "name": "Dispensador de alimento para gatos",
+    "marca": "PitPet",
+    "type": "Gato",
+    "category": "Accesorio",
+    "peso": null,
+    "price_crc": 70000,
+    "description": "Alimentador automático inteligente para gatos, dispensador automático confiable de alimentos para gatos de 6 litros con pantalla LCD para una fácil instalación, (blanco)",
+    "image": "dispensador.png"
+  },
+
+    {
+    "id": 20,
+    "name": "Alimento seco para gatos adultos 1-6",
+    "marca": "Hill's Science Diet",
+    "type": "Gato",
+    "category": "Alimento",
+    "peso": "4kg",
+    "price_crc": 37000,
+    "description": "Tu gato adulto necesita un alimento para mascotas que apoye un pelaje digestivo saludable, brillante, músculos magros y un sistema inmunológico saludable. El alimento seco para gatos sin maíz, trigo y soja de Hill's Science Diet está hecho con ingredientes de alta calidad y fáciles de digerir y está especialmente formulado para alimentar las necesidades de energía de los gatos durante el mejor momento de su vida. Un alimento para gatos hecho con ingredientes naturales, Hill's Science Diet Adult No Corn, Wheat, Soy proporciona vitamina E más ácidos grasos omega-3 y omega-6 para nutrir la piel de tu gato. Repleto de proteínas de alta calidad, este alimento premium para gatos también ayuda a tu gato adulto a mantener los músculos magros. Además, esta croqueta seca para gatos adultos proporciona a tu gato adulto taurina esencial y minerales equilibrados para apoyar la salud del corazón, la función de la vejiga y la función renal.",
+    "image": "hillsGato.png"
+  }
+
+]
