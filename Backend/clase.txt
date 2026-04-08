@@ -1,0 +1,7 @@
+npm init -y
+npm i express
+npm i dotenv
+npm i body-parser
+npm i mongoose
+npm i cors
+npm install mongodb
