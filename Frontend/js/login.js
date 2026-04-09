@@ -1,4 +1,37 @@
-// Partess del login
+// Configuración de la API
+const API_URL = 'http://localhost:3000/api';
+
+// Función helper para hacer peticiones con token
+async function fetchWithToken(url, options = {}) {
+    const token = localStorage.getItem('token');
+    const headers = {
+        'Content-Type': 'application/json',
+        ...options.headers
+    };
+    
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+    }
+    
+    return fetch(url, {
+        ...options,
+        headers
+    });
+}
+
+// Función helper para manejar errores de respuesta
+async function handleResponse(response) {
+    const data = await response.json();
+    if (!response.ok) {
+        throw new Error(data.message || 'Error en la petición');
+    }
+    return data;
+}
+
+// Inicializar autenticación cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', initAuth);
+
+// Partes del login
 const loginForm = document.querySelector('#loginForm');
 const loginNameInput = document.querySelector('#loginName');
 const loginPasswordInput = document.querySelector('#loginPassword');
@@ -178,209 +211,138 @@ if (registerCheckInput) {
 }
 
 
+function initAuth() {
+    // Login con API
+    if (loginForm) {
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-// por ahora de manera local en un json
+            if (!loginForm.checkValidity()) {
+                loginForm.reportValidity();
+                return;
+            }
 
-let usuariosData = [];
+            const submitBtn = loginForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
 
+            try {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Iniciando sesión...';
 
-async function cargarUsuarios() {
-  try {
-    const response = await fetch('data/usuarios.json');
-    if (response.ok) {
-      const usuariosIniciales = await response.json();
-      usuariosData = usuariosIniciales;
+                const formData = new FormData(loginForm);
+                const data = Object.fromEntries(formData.entries());
+
+                const response = await fetchWithToken(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        login: data.loginName,
+                        password: data.loginPassword
+                    })
+                });
+
+                const result = await handleResponse(response);
+
+                // Guardar token y usuario en localStorage
+                localStorage.setItem('token', result.token);
+                localStorage.setItem('usuarioActual', JSON.stringify(result.usuario));
+
+                await Swal.fire({
+                    icon: 'success',
+                    title: '¡Inicio de sesión exitoso!',
+                    text: 'Bienvenido, ' + result.usuario.nombre,
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+
+                window.location.href = 'index.html';
+
+            } catch (error) {
+                console.error('Error en login:', error.message);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error al iniciar sesión',
+                    text: error.message
+                });
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        });
     }
 
-    const usuariosGuardados = localStorage.getItem('usuarios');
-    if (usuariosGuardados) {
-      const usuariosLS = JSON.parse(usuariosGuardados);
-      usuariosLS.forEach(usuarioLS => {
-        if (!usuariosData.find(u => u.email === usuarioLS.email || u.username === usuarioLS.username)) {
-          usuariosData.push(usuarioLS);
-        }
-      });
+    // Registro con API
+    if (registerForm) {
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (registerPasswordInput.value !== registerRepeatPasswordInput.value) {
+                registerRepeatPasswordInput.setCustomValidity('Las contraseñas no coinciden');
+                registerRepeatPasswordInput.classList.add('is-invalid');
+                registerForm.reportValidity();
+                return;
+            }
+
+            if (!registerForm.checkValidity()) {
+                registerForm.reportValidity();
+                return;
+            }
+
+            const submitBtn = registerForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+
+            try {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Registrando...';
+
+                const formData = new FormData(registerForm);
+                const data = Object.fromEntries(formData.entries());
+
+                const response = await fetchWithToken(`${API_URL}/auth/registro`, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        nombre: data.registerName,
+                        username: data.registerUsername,
+                        email: data.registerEmail,
+                        password: data.registerPassword,
+                        cedula: data.registerCedula || ''
+                    })
+                });
+
+                const result = await handleResponse(response);
+
+                // Guardar token y usuario en localStorage
+                localStorage.setItem('token', result.token);
+                localStorage.setItem('usuarioActual', JSON.stringify(result.usuario));
+
+                await Swal.fire({
+                    icon: 'success',
+                    title: '¡Registro exitoso!',
+                    text: 'Bienvenido a PetZone, ' + result.usuario.nombre,
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+
+                registerForm.reset();
+
+                const loginTab = document.querySelector('#tab-login');
+                if (loginTab) {
+                    const loginTabInstance = new bootstrap.Tab(loginTab);
+                    loginTabInstance.show();
+                }
+
+            } catch (error) {
+                console.error('Error en registro:', error.message);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error al registrarse',
+                    text: error.message
+                });
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        });
     }
-
-    // Guardar la lista combinada en localStorage
-    localStorage.setItem('usuarios', JSON.stringify(usuariosData));
-    
-    console.log('Usuarios cargados:', usuariosData);
-  } catch (error) {
-    console.error('Error al cargar usuarios:', error);
-    // Si falla, intentar cargar solo de localStorage
-    const usuariosGuardados = localStorage.getItem('usuarios');
-    if (usuariosGuardados) {
-      usuariosData = JSON.parse(usuariosGuardados);
-    }
-  }
-}
-
-
-function guardarUsuario(usuarioData) {
-  const nuevoId = usuariosData.length > 0 
-    ? Math.max(...usuariosData.map(u => u.id)) + 1 
-    : 1;
-
-  const nuevoUsuario = {
-    id: nuevoId,
-    nombre: usuarioData.registerName,
-    username: usuarioData.registerUsername,
-    email: usuarioData.registerEmail,
-    password: usuarioData.registerPassword 
-  };
-
-  // Verificar que no exista el email o username
-  const existeEmail = usuariosData.find(u => u.email === nuevoUsuario.email);
-  const existeUsername = usuariosData.find(u => u.username === nuevoUsuario.username);
-
-  if (existeEmail) {
-    throw new Error('Este email ya está registrado');
-  }
-  if (existeUsername) {
-    throw new Error('Este nombre de usuario ya está en uso');
-  }
-
-  // Agregar usuario
-  usuariosData.push(nuevoUsuario);
-  
-  // Guardar en localStorage
-  localStorage.setItem('usuarios', JSON.stringify(usuariosData));
-  
-  console.log('Usuario registrado:', nuevoUsuario);
-  return nuevoUsuario;
-}
-
-function validarLogin(loginName, password) {
-  const usuario = usuariosData.find(u => 
-    (u.email === loginName || u.username === loginName) && 
-    u.password === password
-  );
-
-  if (!usuario) {
-    throw new Error('Credenciales incorrectas. Verifica tu email/username y contraseña.');
-  }
-
-  return usuario;
-}
-
-// Cargar usuarios al iniciar
-cargarUsuarios();
-
-
-if (loginForm) {
-  loginForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    if (!loginForm.checkValidity()) {
-      loginForm.reportValidity();
-      return;
-    }
-
-    const submitBtn = loginForm.querySelector('button[type="submit"]');
-    const originalText = submitBtn.textContent;
-
-    try {
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Iniciando sesión...';
-
-      const formData = new FormData(loginForm);
-      const data = Object.fromEntries(formData.entries());
-
-      const usuario = validarLogin(data.loginName, data.loginPassword);
-
-      localStorage.setItem('usuarioActual', JSON.stringify({
-        id: usuario.id,
-        nombre: usuario.nombre,
-        username: usuario.username,
-        email: usuario.email
-      }));
-
-      await Swal.fire({
-        icon: 'success',
-        title: '¡Inicio de sesión exitoso!',
-        text: 'Bienvenido, ' + usuario.nombre,
-        timer: 2000,
-        showConfirmButton: false
-      });
-      
-      window.location.href = 'index.html';
-
-    } catch (error) {
-      console.error('Error en login:', error.message);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error al iniciar sesión',
-        text: error.message
-      });
-    } finally {
-      // Siempre reactivamos el botón
-      submitBtn.disabled = false;
-      submitBtn.textContent = originalText;
-    }
-  });
-}
-
-// Envío del formulario de Registro
-if (registerForm) {
-  registerForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    if (registerPasswordInput.value !== registerRepeatPasswordInput.value) {
-      registerRepeatPasswordInput.setCustomValidity('Las contraseñas no coinciden');
-      registerRepeatPasswordInput.classList.add('is-invalid');
-      registerForm.reportValidity();
-      return;
-    }
-
-    if (!registerForm.checkValidity()) {
-      registerForm.reportValidity();
-      return;
-    }
-
-    const submitBtn = registerForm.querySelector('button[type="submit"]');
-    const originalText = submitBtn.textContent;
-
-    try {
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Registrando...';
-
-      const formData = new FormData(registerForm);
-      const data = Object.fromEntries(formData.entries());
-
-      delete data.registerRepeatPassword;
-
-      const nuevoUsuario = guardarUsuario(data);
-
-      await Swal.fire({
-        icon: 'success',
-        title: '¡Registro exitoso!',
-        text: 'Bienvenido a PetZone, ' + nuevoUsuario.nombre,
-        timer: 2000,
-        showConfirmButton: false
-      });
-      
-      registerForm.reset();
-      
-      const loginTab = document.querySelector('#tab-login');
-      if (loginTab) {
-        const loginTabInstance = new bootstrap.Tab(loginTab);
-        loginTabInstance.show();
-      }
-
-    } catch (error) {
-      console.error('Error en registro:', error.message);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error al registrarse',
-        text: error.message
-      });
-    } finally {
-      // Siempre reactivamos el botón
-      submitBtn.disabled = false;
-      submitBtn.textContent = originalText;
-    }
-  });
 }
 
 // Cambiar entre pestañas desde los enlaces
