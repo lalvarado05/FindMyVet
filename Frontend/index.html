@@ -31,22 +31,30 @@
           <li class="nav-item">
             <a class="nav-link d-flex align-items-center" href="index.html">
               <i class="fa-regular fa-house me-1"></i> Inicio
-                    </a>
-                </li>
+            </a>
+          </li>
           <li class="nav-item">
             <a class="nav-link d-flex align-items-center" href="productos.html">
               <i class="fa-solid fa-bag-shopping me-1"></i> Productos
-                    </a>
-                </li>
-          <li class="nav-item">
-            <a class="nav-link d-flex align-items-center" href="login.html">
+            </a>
+          </li>
+          <li class="nav-item" id="loginItem">
+            <a class="nav-link d-flex align-items-center" href="login.html" id="loginLink">
               <i class="fa-solid fa-user me-1"></i> Iniciar Sesión
             </a>
           </li>
-            </ul>
+          <li class="nav-item" id="logoutItem" style="display: none;">
+            <span class="nav-link d-flex align-items-center" id="usuarioNombre"></span>
+          </li>
+          <li class="nav-item" id="logoutBtnItem" style="display: none;">
+            <button class="btn btn-outline-danger btn-sm" onclick="logout()">
+              Cerrar Sesión
+            </button>
+          </li>
+        </ul>
       </div>
-        </div>
-    </nav>
+    </div>
+  </nav>
 
   <!-- MAIN -->
   <main id="home">

@@ -59,15 +59,19 @@ navbarLinks.forEach(link => {
 // Verificar autenticación y mostrar elementos según rol
 function verificarAutenticacion() {
     const usuario = JSON.parse(localStorage.getItem('usuarioActual'));
+    const loginItem = document.querySelector('#loginItem');
     const loginLink = document.querySelector('#loginLink');
-    const logoutLink = document.querySelector('#logoutLink');
-    const adminPanel = document.querySelector('#adminPanel');
+    const logoutItem = document.querySelector('#logoutItem');
+    const logoutBtnItem = document.querySelector('#logoutBtnItem');
     const usuarioNombre = document.querySelector('#usuarioNombre');
+    const adminPanel = document.querySelector('#adminPanel');
 
     if (usuario) {
         // Usuario autenticado
+        if (loginItem) loginItem.style.display = 'none';
         if (loginLink) loginLink.style.display = 'none';
-        if (logoutLink) logoutLink.style.display = 'block';
+        if (logoutItem) logoutItem.style.display = 'block';
+        if (logoutBtnItem) logoutBtnItem.style.display = 'block';
         if (usuarioNombre) usuarioNombre.textContent = `Hola, ${usuario.nombre}`;
         
         // Mostrar panel de admin si es admin
@@ -76,8 +80,10 @@ function verificarAutenticacion() {
         }
     } else {
         // Usuario no autenticado
+        if (loginItem) loginItem.style.display = 'block';
         if (loginLink) loginLink.style.display = 'block';
-        if (logoutLink) logoutLink.style.display = 'none';
+        if (logoutItem) logoutItem.style.display = 'none';
+        if (logoutBtnItem) logoutBtnItem.style.display = 'none';
         if (adminPanel) adminPanel.style.display = 'none';
         if (usuarioNombre) usuarioNombre.textContent = '';
     }
