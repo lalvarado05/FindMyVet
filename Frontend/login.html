@@ -114,8 +114,8 @@
                     </div>
 
                     <div class="form-outline mb-4">
-                      <input type="text" id="registerId" name="registerId" class="form-control" required />
-                      <label class="form-label" for="registerId">Identificación (ID)</label>
+                      <input type="text" id="registerId" name="registerId" class="form-control" required minlength="9" maxlength="9" oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
+                      <label class="form-label" for="registerId">Identificación</label>
                       <div class="invalid-feedback"></div>
                     </div>
 

@@ -29,7 +29,6 @@ document.addEventListener('DOMContentLoaded', initAuth);
 
 const loginForm = document.querySelector('#loginForm');
 const loginNameInput = document.querySelector('#loginName');
-const loginIdInput = document.querySelector('#loginId');
 const loginPasswordInput = document.querySelector('#loginPassword');
 
 const registerForm = document.querySelector('#registerForm');
@@ -41,21 +40,6 @@ const registerPasswordInput = document.querySelector('#registerPassword');
 const registerRepeatPasswordInput = document.querySelector('#registerRepeatPassword');
 const registerCheckInput = document.querySelector('#registerCheck');
 
-if (loginIdInput) {
-  loginIdInput.addEventListener('input', (event) => {
-    const input = event.target;
-    const feedback = input.parentElement.querySelector('.invalid-feedback');
-    if (input.validity.valueMissing) {
-      input.setCustomValidity('El ID es obligatorio');
-      feedback.textContent = 'El ID es obligatorio';
-      input.classList.add('is-invalid');
-    } else {
-      input.setCustomValidity('');
-      feedback.textContent = '';
-      input.classList.remove('is-invalid');
-    }
-  });
-}
 
 if (loginNameInput) {
   loginNameInput.addEventListener('input', (event) => {
