@@ -1,223 +1,152 @@
 const contenedor = document.querySelector("#carritoProductos");
 const totalElemento = document.querySelector("#totalCarrito");
 
-// Verificar autenticación
-function verificarAutenticacion() {
-    const token = localStorage.getItem('token');
-    if (!token) {
-        window.location.href = 'login.html';
-        return false;
-    }
-    return true;
-}
-
 async function mostrarCarrito() {
-  try {
-    const response = await fetchWithToken(`${API_URL}/carrito`);
-    const result = await handleResponse(response);
-    
-    // La API devuelve el carrito con items que tienen producto y cantidad
-    const carritoData = result.carrito || result;
-    const items = carritoData.items || [];
+    let items = [];
+
+    try {
+        const response = await fetchWithToken(`${API_URL}/carrito`);
+        const result = await handleResponse(response);
+        items = result.carrito.items || [];
+    } catch (error) {
+        items = JSON.parse(localStorage.getItem("carrito")) || [];
+    }
 
     if (items.length === 0) {
-      contenedor.innerHTML = "<p class='text-center py-4'>Tu carrito está vacío</p>";
-      totalElemento.innerText = "₡0";
-      return;
+        contenedor.innerHTML = "<p class='text-center py-4'>Tu carrito está vacío</p>";
+        totalElemento.innerText = "₡0";
+        return;
     }
 
-    const html = items.map((item, index) => {
-      const producto = item.producto || {};
-      const precio = producto.precio || 0;
-      const cantidad = item.cantidad || 1;
-      const subtotal = precio * cantidad;
+    const html = items.map((item, i) => {
+        const prod = item.producto || item;
+        const precio = prod.price_crc || prod.precio || 0;
+        const cantidad = item.cantidad || 1;
+        const subtotal = precio * cantidad;
+        const id = prod._id || prod.id;
+        const imagen = prod.image || prod.imagen || "img/placeholder.png";
 
-      return `
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <div class="d-flex align-items-center gap-3">
-            <img src="${getImageUrl(producto.imagen)}" alt="${producto.nombre}" class="rounded" style="width: 60px; height: 60px; object-fit: cover;">
-            <div>
-              <h6 class="mb-0">${producto.nombre}</h6>
-              <small class="text-muted">₡${precio.toLocaleString()} x ${cantidad}</small>
+        return `
+        <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
+            <div class="d-flex align-items-center">
+                <img src="${imagen}" style="width:50px; height:50px; object-fit:contain;" class="me-3"
+                     onerror="this.src='img/petZone-logo.png'">
+                <div>
+                    <h6 class="mb-0 small">${prod.name || prod.nombre || 'Producto'}</h6>
+                    <small class="text-muted">₡${precio.toLocaleString()} c/u</small>
+                    <div class="d-flex align-items-center gap-2 mt-1">
+                        <button class="btn btn-outline-secondary btn-sm" onclick="cambiarCantidad('${id}', ${i}, -1, ${cantidad})">−</button>
+                        <span>${cantidad}</span>
+                        <button class="btn btn-outline-secondary btn-sm" onclick="cambiarCantidad('${id}', ${i}, 1, ${cantidad})">+</button>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="text-end">
-            <strong>₡${subtotal.toLocaleString()}</strong>
-            <button class="btn btn-sm btn-outline-danger ms-2" onclick="eliminarProducto('${item._id}')">
-              <i class="bi bi-trash"></i>
-            </button>
-          </div>
+            <div class="text-end">
+                <div class="fw-bold">₡${subtotal.toLocaleString()}</div>
+                <button class="btn btn-sm text-danger p-0 mt-1" onclick="eliminarProducto('${id}', ${i})">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
         </div>
-      `;
+        `;
     }).join('');
 
     contenedor.innerHTML = html;
 
-    const total = items.reduce((acc, item) => {
-      const p = item.producto?.precio || 0;
-      const c = item.cantidad || 0;
-      return acc + (p * c);
-    }, 0);
+    let total = 0;
+    items.map((item) => {
+        const prod = item.producto || item;
+        const precio = prod.price_crc || prod.precio || 0;
+        const cantidad = item.cantidad || 0;
+        total += precio * cantidad;
+    });
 
     totalElemento.innerText = `₡${total.toLocaleString()}`;
-  } catch (error) {
-    console.error('Error al cargar carrito:', error);
-    // Si hay error, intentar usar localStorage como fallback
-    mostrarCarritoLocalStorage();
-  }
-}
-
-function mostrarCarritoLocalStorage() {
-  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-
-  if (carrito.length === 0) {
-    contenedor.innerHTML = "<p class='text-center py-4'>Tu carrito está vacío</p>";
-    totalElemento.innerText = "₡0";
-    return;
-  }
-
-  const html = carrito.map((prod, index) => {
-    const precio = prod.price_crc || 0; 
-    const cantidad = prod.cantidad || 0;
-    const subtotal = precio * cantidad;
-
-    return `
-      <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
-        <div class="d-flex align-items-center">
-          <img src="${getImageUrl(prod.image)}"
-               style="width: 50px; height: 50px; object-fit: contain;" class="me-3">
-          <div>
-            <h6 class="mb-0 small">${prod.name || 'Producto'}</h6>
-            <small class="text-muted">
-              ${cantidad} x ₡${precio.toLocaleString()}
-            </small>
-          </div>
-        </div>
-        <div class="text-end">
-            <div class="fw-bold">₡${subtotal.toLocaleString()}</div>
-            <button class="btn btn-sm text-danger p-0" onclick="eliminarProductoLocalStorage(${index})">
-                <i class="bi bi-trash"></i>
-            </button>
-        </div>
-      </div>
-    `;
-  }).join('');
-
-  contenedor.innerHTML = html;
-
-  const total = carrito.reduce((acc, item) => {
-    const p = item.price_crc || 0;
-    const c = item.cantidad || 0;
-    return acc + (p * c);
-  }, 0);
-
-  totalElemento.innerText = `₡${total.toLocaleString()}`;
-}
-
-// --- PROCEDER AL PAGO ---
-window.procederAlPago = async () => {
-    try {
-        const response = await fetchWithToken(`${API_URL}/ordenes`, {
-            method: 'POST'
-        });
-        const result = await handleResponse(response);
-
-        Swal.fire({
-            title: '¡Orden realizada!',
-            text: 'Tu pedido ha sido procesado con éxito. ¡Gracias por confiar en PetZone!',
-            icon: 'success',
-            confirmButtonText: 'Genial',
-            confirmButtonColor: '#198754'
-        }).then((result) => {
-            window.location.href = "productos.html"; 
-        });
-    } catch (error) {
-        console.error('Error al crear orden:', error);
-        Swal.fire({
-            title: 'Error',
-            text: error.message || 'No se pudo procesar la orden',
-            icon: 'error',
-            confirmButtonColor: '#212529'
-        });
-    }
-};
-
-window.eliminarProducto = async (productoId) => {
-    try {
-        const response = await fetchWithToken(`${API_URL}/carrito/eliminar/${productoId}`, {
-            method: 'DELETE'
-        });
-        await handleResponse(response);
-        mostrarCarrito();
-        actualizarContador();
-    } catch (error) {
-        console.error('Error al eliminar producto:', error);
-        Swal.fire({
-            title: 'Error',
-            text: error.message,
-            icon: 'error'
-        });
-    }
-};
-
-window.eliminarProductoLocalStorage = (index) => {
-    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-    carrito.splice(index, 1);
-    localStorage.setItem("carrito", JSON.stringify(carrito));
-    mostrarCarritoLocalStorage();
     actualizarContador();
-};
+}
 
-window.vaciarCarrito = async () => {
+async function cambiarCantidad(id, index, delta, cantidadActual) {
+if (cantidadActual <= 1 && delta === -1) {
+    eliminarProducto(id, index);
+    return;
+}
+
+    try {
+        await fetchWithToken(`${API_URL}/carrito/agregar`, {
+            method: 'POST',
+            body: JSON.stringify({ productoId: id, cantidad: delta })
+        });
+    } catch (error) {
+        let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+        carrito[index].cantidad = cantidadActual + delta;
+        localStorage.setItem("carrito", JSON.stringify(carrito));
+    }
+
+    mostrarCarrito();
+}
+
+async function eliminarProducto(id, index) {
+    try {
+        await fetchWithToken(`${API_URL}/carrito/eliminar/${id}`, { method: 'DELETE' });
+    } catch (error) {
+        let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+        carrito.splice(index, 1);
+        localStorage.setItem("carrito", JSON.stringify(carrito));
+    }
+
+    mostrarCarrito();
+}
+
+async function procederAlPago() {
+    let items = [];
+
+    try {
+        const response = await fetchWithToken(`${API_URL}/carrito`);
+        const result = await handleResponse(response);
+        items = result.carrito.items || [];
+    } catch (error) {
+        items = JSON.parse(localStorage.getItem("carrito")) || [];
+    }
+
+    if (items.length === 0) {
+        Swal.fire({ title: 'Carrito vacío', icon: 'warning' });
+        return;
+    }
+
+    Swal.fire({
+        title: '¡Orden realizada!',
+        text: '¡Gracias por confiar en PetZone!',
+        icon: 'success',
+        confirmButtonText: 'Genial',
+        confirmButtonColor: '#198754'
+    }).then(async () => {
+        try {
+            await fetchWithToken(`${API_URL}/ordenes`, { method: 'POST' });
+            await fetchWithToken(`${API_URL}/carrito/vaciar`, { method: 'DELETE' });
+        } catch (e) {}
+        localStorage.removeItem("carrito");
+        window.location.href = "productos.html";
+    });
+}
+
+async function vaciarCarrito() {
     Swal.fire({
         title: '¿Estás seguro?',
-        text: "Se borrarán todos los productos del carrito",
+        text: "Se borrarán todos los productos",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#212529',
-        cancelButtonColor: '#d33',
         confirmButtonText: 'Sí, vaciar',
         cancelButtonText: 'Cancelar'
     }).then(async (result) => {
         if (result.isConfirmed) {
             try {
-                const response = await fetchWithToken(`${API_URL}/carrito/vaciar`, {
-                    method: 'DELETE'
-                });
-                await handleResponse(response);
-                mostrarCarrito();
-                actualizarContador();
+                await fetchWithToken(`${API_URL}/carrito/vaciar`, { method: 'DELETE' });
             } catch (error) {
-                console.error('Error al vaciar carrito:', error);
-                // Fallback a localStorage
                 localStorage.removeItem("carrito");
-                mostrarCarritoLocalStorage();
-                actualizarContador();
             }
+            mostrarCarrito();
         }
     });
-};
-
-async function actualizarContador() {
-  const badge = document.getElementById("cartCount");
-  if (!badge) return;
-  
-  try {
-    const response = await fetchWithToken(`${API_URL}/carrito`);
-    const result = await handleResponse(response);
-    const carritoData = result.carrito || result;
-    const items = carritoData.items || [];
-    const total = items.reduce((acc, item) => acc + (item.cantidad || 0), 0);
-    badge.innerText = total;
-  } catch (error) {
-    // Fallback a localStorage
-    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-    const total = carrito.reduce((acc, item) => acc + (item.cantidad || 0), 0);
-    badge.innerText = total;
-  }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    if (!verificarAutenticacion()) return;
-    mostrarCarrito();
-});
+document.addEventListener("DOMContentLoaded", mostrarCarrito);
