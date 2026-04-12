@@ -106,17 +106,20 @@ async function actualizarContador() {
   const badge = document.getElementById("cartCount");
   if (!badge) return;
   
+  let total = 0;
   try {
       const response = await fetchWithToken(`${API_URL}/carrito`);
       const result = await handleResponse(response);
       const carritoData = result.carrito || result;
       const items = carritoData.items || [];
-      badge.innerText = items.reduce((acc, item) => acc + item.cantidad, 0);
+      total = items.reduce((acc, item) => acc + item.cantidad, 0);
   } catch (error) {
-      // Fallback a localStorage si hay error o no hay token
       let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-      badge.innerText = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+      total = carrito.reduce((acc, item) => acc + item.cantidad, 0);
   }
+
+  badge.innerText = total;
+  badge.style.display = total > 0 ? 'block' : 'none';
 }
 
 document.addEventListener("DOMContentLoaded", () => {
