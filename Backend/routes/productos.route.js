@@ -104,4 +104,30 @@ router.delete('/:id', auth, esAdmin, async (req, res) => {
     }
 });
 
+router.put('/:id/stock', auth, esAdmin, async (req, res) => {
+    const { stock } = req.body;
+
+    if (stock === undefined || stock < 0) {
+        return res.status(400).json({
+            message: 'El stock debe ser un número mayor o igual a 0.',
+            estado: 'error'
+        });
+    }
+
+    try {
+        const producto = await Producto.findByIdAndUpdate(
+            req.params.id,
+            { $inc: { stock } },
+            { new: true, runValidators: true }
+        ).populate('categoria');
+        
+        if (!producto) {
+            return res.status(404).json({ message: 'Producto no encontrado.', estado: 'error' });
+        }
+        res.json({ message: 'Stock actualizado.', estado: 'success', producto });
+    } catch (error) {
+        res.status(500).json({ message: 'Error al actualizar stock.', estado: 'error', error: error.message });
+    }
+});
+
 module.exports = router;

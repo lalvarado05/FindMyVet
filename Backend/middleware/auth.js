@@ -16,6 +16,10 @@ const auth = async (req, res, next) => {
             return res.status(401).json({ message: 'Token inválido.', estado: 'error' });
         }
 
+        if (!usuario.activo) {
+            return res.status(403).json({ message: 'Usuario deshabilitado. Contacte al administrador.', estado: 'error' });
+        }
+
         req.usuario = usuario;
         next();
     } catch (error) {

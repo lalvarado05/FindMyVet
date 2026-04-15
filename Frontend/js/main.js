@@ -65,6 +65,8 @@ function verificarAutenticacion() {
     const logoutBtnItem = document.querySelector('#logoutBtnItem');
     const usuarioNombre = document.querySelector('#usuarioNombre');
     const adminPanel = document.querySelector('#adminPanel');
+    const adminLinkItem = document.querySelector('#adminLinkItem');
+    const adminLink = document.querySelector('#adminLink');
 
     if (usuario) {
         // Usuario autenticado
@@ -78,6 +80,11 @@ function verificarAutenticacion() {
         if (adminPanel && usuario.rol === 'admin') {
             adminPanel.style.display = 'block';
         }
+        
+        // Mostrar link de admin si es admin
+        if (adminLinkItem && usuario.rol === 'admin') {
+            adminLinkItem.style.display = 'block';
+        }
     } else {
         // Usuario no autenticado
         if (loginItem) loginItem.style.display = 'block';
@@ -85,6 +92,7 @@ function verificarAutenticacion() {
         if (logoutItem) logoutItem.style.display = 'none';
         if (logoutBtnItem) logoutBtnItem.style.display = 'none';
         if (adminPanel) adminPanel.style.display = 'none';
+        if (adminLinkItem) adminLinkItem.style.display = 'none';
         if (usuarioNombre) usuarioNombre.textContent = '';
     }
 }

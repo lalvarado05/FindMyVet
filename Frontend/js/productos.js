@@ -9,227 +9,352 @@ function verificarAutenticacion() {
 }
 
 let listaArticulos = [];
+let categoriasDisponibles = [];
+let categoriaSeleccionada = '';
+let carritoActual = [];
 const seccionArticulos = document.querySelector("#seccionProductos");
 const searchInput = document.querySelector("#searchInput");
 const filtersContainer = document.querySelector("#filtersContainer");
+const categoriaDropdown = document.querySelector("#categoriaDropdown");
+
+// Cargar categorías desde la API
+const cargarCategorias = async () => {
+  try {
+    const response = await fetchWithToken(`${API_URL}/categorias`);
+    const result = await handleResponse(response);
+    categoriasDisponibles = result.categorias;
+    
+    // Llenar el dropdown con las categorías
+    const dropdownHTML = categoriasDisponibles.map(cat => `
+      <li><a class="dropdown-item" href="#" data-categoria="${cat._id}">${cat.nombre}</a></li>
+    `).join('');
+    
+    categoriaDropdown.innerHTML = `
+      <li><a class="dropdown-item" href="#" data-categoria="">Todas las categorías</a></li>
+      ${dropdownHTML}
+    `;
+    
+    // Agregar event listeners a los items del dropdown
+    document.querySelectorAll('#categoriaDropdown .dropdown-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        categoriaSeleccionada = e.target.dataset.categoria;
+        filtrarProductos();
+        
+        // Actualizar estado activo del dropdown
+        document.querySelectorAll('#categoriaDropdown .dropdown-item').forEach(i => {
+          i.classList.remove('active');
+        });
+        e.target.classList.add('active');
+      });
+    });
+  } catch (error) {
+    console.error('Error al cargar categorías:', error);
+  }
+};
+
+// Cargar carrito actual para saber qué productos están agregados
+const cargarCarrito = async () => {
+  try {
+    const response = await fetchWithToken(`${API_URL}/carrito`);
+    const result = await handleResponse(response);
+    const carritoData = result.carrito || result;
+    carritoActual = carritoData.items || [];
+  } catch (error) {
+    // Fallback a localStorage
+    carritoActual = JSON.parse(localStorage.getItem("carrito")) || [];
+  }
+};
 
 // Trae los productos desde la API y los guarda en listaArticulos
 const cargarArticulos = async () => {
-    try {
-        const response = await fetchWithToken(`${API_URL}/productos`);
-        const result = await handleResponse(response);
-        
-        // Mapea los productos al formato que usa el frontend
-        listaArticulos = result.productos.map(prod => ({
-            id: prod._id,
-            name: prod.nombre,
-            price_crc: prod.precio,
-            image: prod.imagen,
-            description: prod.descripcion || "",
-            stock: prod.stock,
-            categoria: (prod.categoria && typeof prod.categoria === 'object') 
-                        ? prod.categoria.nombre 
-                        : (prod.categoria || "General")
-        }));
-        
-        pintarArticulos(listaArticulos);
-        crearFiltros(); 
-    } catch (error) {
-        console.error('Error al cargar productos:', error);
-        seccionArticulos.innerHTML = `<p class='text-center py-4'>Error al cargar productos: ${error.message}</p>`;
-    }
+  try {
+    const response = await fetchWithToken(`${API_URL}/productos`);
+    const result = await handleResponse(response);
+    
+    // Adaptar estructura de datos del backend al frontend
+    listaArticulos = result.productos.map(prod => ({
+      id: prod._id,
+      name: prod.nombre,
+      price_crc: prod.precio,
+      image: prod.imagen,
+      description: prod.descripcion,
+      stock: prod.stock,
+      categoriaId: prod.categoria?._id || prod.categoria,
+      categoriaNombre: prod.categoria?.nombre || prod.categoria
+    }));
+    
+    await pintarArticulos(listaArticulos);
+  } catch (error) {
+    console.error('Error al cargar productos:', error);
+    seccionArticulos.innerHTML = "<p>Error al cargar productos: " + error.message + "</p>";
+  }
 };
 
 // Genera el HTML de cada producto y lo muestra en pantalla
-function pintarArticulos(articulos) {
-    if (articulos.length === 0) {
-        seccionArticulos.innerHTML = "<p class='text-center py-4'>No se encontraron productos</p>";
-        return;
-    }
+async function pintarArticulos(articulos) {
+  if (articulos.length === 0) {
+    seccionArticulos.innerHTML = "<p class='text-center py-4'>No se encontraron productos</p>";
+    return;
+  }
 
-    const html = articulos.map((articulo) => `
-        <div class="col-md-4 col-xl-3 mb-4">
-            <div class="card h-100 shadow-sm">
-                <a href="vistaProducto.html?id=${articulo.id}">
-                    <img class="card-img-top p-3" 
-                         src="${getImageUrl(articulo.image)}" 
-                         alt="${articulo.name}" 
-                         style="height:150px; object-fit:contain; cursor:pointer;">
-                </a>
-                <div class="card-body d-flex flex-column">
-                    <h6 class="card-title text-center mb-2">${articulo.name}</h6>
-                    <p class="text-center fw-bold text-success mb-3">
-                        ₡${articulo.price_crc.toLocaleString()}
-                    </p>
-                    
-                    <div class="d-flex align-items-center justify-content-between mt-auto pt-3 border-top">
-                        <button class="btn-agregar-redondo" onclick="agregarCarrito('${articulo.id}')">
-                            <i class="bi bi-cart-plus"></i> Agregar
-                        </button>
-                        <div class="product-counter-mini">
-                            <button class="counter-btn" onclick="decrementar('${articulo.id}')">−</button>
-                            <span id="cant-${articulo.id}" class="counter-value">1</span>
-                            <button class="counter-btn" onclick="incrementar('${articulo.id}')">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  // Recargar carrito para asegurar estado actualizado
+  await cargarCarrito();
+
+const html = articulos.map((articulo, index) => {
+  // Verificar si el producto está en el carrito
+  const itemEnCarrito = carritoActual.find(item => 
+    (item.productoId === articulo.id) || (item.producto?._id === articulo.id)
+  );
+  const cantidad = itemEnCarrito ? itemEnCarrito.cantidad : 0;
+
+return `
+  <div class="col-md-3 mb-4">
+    <div class="card h-100 shadow-sm">
+      
+<a href="vistaProducto.html?id=${articulo.id}">
+        <img 
+          class="card-img-top p-3" 
+          src="${getImageUrl(articulo.image)}" 
+          alt="${articulo.name}"
+          style="height:150px; object-fit:contain; cursor:pointer;"
+        >
+      </a>
+
+      <div class="card-body d-flex flex-column">
+        <h6 class="card-title text-center">${articulo.name}</h6>
+        
+        <p class="text-center fw-bold text-success">
+          ₡${articulo.price_crc.toLocaleString()}
+        </p>
+
+        ${cantidad > 0 ? `
+        <div class="d-flex align-items-center justify-content-center mt-auto">
+          <button class="btn btn-outline-secondary btn-sm" onclick="decrementarProducto('${articulo.id}')">-</button>
+          <span class="mx-3 fw-bold">${cantidad}</span>
+          <button class="btn btn-outline-secondary btn-sm" onclick="incrementarProducto('${articulo.id}')">+</button>
         </div>
-    `).join('');
-    seccionArticulos.innerHTML = html;
+        ` : `
+        <button class="btn btn-dark w-100 mt-auto" onclick="agregarCarrito('${articulo.id}')">
+          Agregar al carrito
+        </button>
+        `}
+      </div>
+    </div>
+  </div>`;
+}).join('');
+  seccionArticulos.innerHTML = html;
 }
 
-// Crea los botones de filtro según las categorías disponibles
-function crearFiltros() {
-    const categoriasUnicas = [...new Set(listaArticulos.map(p => p.categoria))]
-                                .filter(c => typeof c === 'string')
-                                .sort();
+// Función para filtrar productos
+async function filtrarProductos() {
+  const searchTerm = searchInput.value.toLowerCase();
+
+  const productosFiltrados = listaArticulos.filter(articulo => {
+    const cumpleBusqueda = articulo.name.toLowerCase().includes(searchTerm) ||
+                          articulo.description.toLowerCase().includes(searchTerm);
     
-    filtersContainer.innerHTML = `
-        <button class="filter-pill active" data-category="all">Todos</button>
-        ${categoriasUnicas.map(cat => `
-            <button class="filter-pill" data-category="${cat}">${cat}</button>
-        `).join('')}
-    `;
+    const cumpleCategoria = !categoriaSeleccionada || 
+                           articulo.categoriaId === categoriaSeleccionada;
+    
+    return cumpleBusqueda && cumpleCategoria;
+  });
 
-    // Agrega el evento click a cada filtro
-    document.querySelectorAll('.filter-pill').forEach(button => {
-        button.addEventListener('click', (e) => {
-            document.querySelectorAll('.filter-pill').forEach(btn => btn.classList.remove('active'));
-            e.target.classList.add('active');
-            filtrarTodo();
-        });
+  await pintarArticulos(productosFiltrados);
+}
+
+// Incrementar cantidad de un producto en el carrito
+async function incrementarProducto(productId) {
+  const prod = listaArticulos.find(p => p.id === productId);
+  if (!prod) return;
+  
+  try {
+    const response = await fetchWithToken(`${API_URL}/carrito/agregar`, {
+      method: 'POST',
+      body: JSON.stringify({
+        productoId: productId,
+        cantidad: 1
+      })
     });
-}
-
-// Filtra los productos por búsqueda y categoría seleccionada
-function filtrarTodo() {
-    const searchTerm = searchInput.value.toLowerCase();
-    const activePill = document.querySelector('.filter-pill.active');
-    const catSeleccionada = activePill ? activePill.getAttribute('data-category') : 'all';
-
-    const filtrados = listaArticulos.filter(art => {
-        const coincideBusqueda = art.name.toLowerCase().includes(searchTerm) || 
-                                 art.description.toLowerCase().includes(searchTerm);
-        const coincideCat = (catSeleccionada === 'all' || art.categoria === catSeleccionada);
-        return coincideBusqueda && coincideCat;
-    });
-
-    pintarArticulos(filtrados);
-}
-
-// Suma 1 al contador del producto
-function incrementar(id) {
-    const el = document.getElementById(`cant-${id}`);
-    if (el) el.innerText = parseInt(el.innerText) + 1;
-}
-
-// Resta 1 al contador, mínimo 1
-function decrementar(id) {
-    const el = document.getElementById(`cant-${id}`);
-    if (el) {
-        let val = parseInt(el.innerText);
-        if (val > 1) el.innerText = val - 1;
+    await handleResponse(response);
+    await cargarCarrito();
+    pintarArticulos(listaArticulos);
+    actualizarContador();
+  } catch (error) {
+    // Fallback a localStorage
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    const existente = carrito.find(item => item.id === productId || item.productoId === productId);
+    if (existente) {
+      existente.cantidad++;
+    } else {
+      carrito.push({
+        id: prod.id,
+        name: prod.name,
+        price_crc: prod.price_crc,
+        image: prod.image,
+        cantidad: 1
+      });
     }
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    carritoActual = carrito;
+    pintarArticulos(listaArticulos);
+    actualizarContador();
+  }
 }
 
-// Agrega el producto al carrito con la cantidad seleccionada
+// Decrementar cantidad de un producto en el carrito
+async function decrementarProducto(productId) {
+  try {
+    // Primero obtener el item actual del carrito
+    const itemEnCarrito = carritoActual.find(item => 
+      (item.productoId === productId) || (item.producto?._id === productId)
+    );
+    
+    if (!itemEnCarrito || itemEnCarrito.cantidad <= 1) {
+      // Si no existe o cantidad es 1, eliminar del carrito
+      const response = await fetchWithToken(`${API_URL}/carrito/eliminar/${productId}`, {
+        method: 'DELETE'
+      });
+      await handleResponse(response);
+    } else {
+      // Si cantidad > 1, restar 1 usando agregar con cantidad negativa
+      const response = await fetchWithToken(`${API_URL}/carrito/agregar`, {
+        method: 'POST',
+        body: JSON.stringify({
+          productoId: productId,
+          cantidad: -1
+        })
+      });
+      await handleResponse(response);
+    }
+    
+    await cargarCarrito();
+    pintarArticulos(listaArticulos);
+    actualizarContador();
+  } catch (error) {
+    // Fallback a localStorage
+    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    const existente = carrito.find(item => item.id === productId || item.productoId === productId);
+    if (existente && existente.cantidad > 1) {
+      existente.cantidad--;
+      localStorage.setItem("carrito", JSON.stringify(carrito));
+      carritoActual = carrito;
+      pintarArticulos(listaArticulos);
+      actualizarContador();
+    } else if (existente && existente.cantidad === 1) {
+      // Si la cantidad es 1, eliminar del carrito
+      const index = carrito.indexOf(existente);
+      carrito.splice(index, 1);
+      localStorage.setItem("carrito", JSON.stringify(carrito));
+      carritoActual = carrito;
+      pintarArticulos(listaArticulos);
+      actualizarContador();
+    }
+  }
+}
+
 async function agregarCarrito(productId) {
-    const cantElement = document.getElementById(`cant-${productId}`);
-    const cantidadSeleccionada = cantElement ? parseInt(cantElement.innerText) : 1;
-    const prod = listaArticulos.find(p => p.id === productId);
+  const prod = listaArticulos.find(p => p.id === productId);
+  if (!prod) return;
+  
+  try {
+    const response = await fetchWithToken(`${API_URL}/carrito/agregar`, {
+      method: 'POST',
+      body: JSON.stringify({
+        productoId: productId,
+        cantidad: 1
+      })
+    });
+    await handleResponse(response);
     
-    if (!prod) return;
-
-    try {
-        // Intenta agregar via API
-        const response = await fetchWithToken(`${API_URL}/carrito/agregar`, {
-            method: 'POST',
-            body: JSON.stringify({ 
-                productoId: productId, 
-                cantidad: cantidadSeleccionada 
-            })
-        });
-        await handleResponse(response);
-        
-        actualizarContador();
-        Swal.fire({ 
-            title: '¡Añadido!', 
-            text: `${cantidadSeleccionada}x ${prod.name} al carrito`, 
-            icon: 'success', 
-            timer: 1500, 
-            showConfirmButton: false 
-        });
-        
-        if(cantElement) cantElement.innerText = "1";
-
-    } catch (error) {
-        // Si la API falla, guarda en localStorage
-        let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-        const existente = carrito.find(item => item.id === productId);
-
-        if (existente) {
-            existente.cantidad += cantidadSeleccionada;
-        } else {
-            carrito.push({
-                id: prod.id,
-                name: prod.name,
-                price_crc: prod.price_crc,
-                image: prod.image,
-                cantidad: cantidadSeleccionada
-            });
-        }
-
-        localStorage.setItem("carrito", JSON.stringify(carrito));
-        actualizarContador();
-        
-        Swal.fire({ 
-            title: '¡Añadido!', 
-            text: `${cantidadSeleccionada}x ${prod.name} al carrito (Local)`, 
-            icon: 'success', 
-            timer: 1500, 
-            showConfirmButton: false 
-        });
-        
-        if(cantElement) cantElement.innerText = "1";
-    }
-}
-
-// Actualiza el número que aparece en el botón flotante del carrito
-async function actualizarContador() {
-    const badge = document.getElementById("cartCount");
-    if (!badge) return;
-    
-    try {
-        const response = await fetchWithToken(`${API_URL}/carrito`);
-        const result = await handleResponse(response);
-        const carritoData = result.carrito || result;
-        const items = carritoData.items || [];
-        const total = items.reduce((acc, item) => acc + (item.cantidad || 0), 0);
-        badge.innerText = total;
-    } catch (error) {
-        // Si falla la API, cuenta desde localStorage
-        let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-        const total = carrito.reduce((acc, item) => acc + (item.cantidad || 0), 0);
-        badge.innerText = total;
-    }
-}
-
-// Si el carrito cambia en otra pestaña, actualiza el contador
-window.addEventListener('storage', (event) => {
-    if (event.key === 'carrito') {
-        actualizarContador();
-    }
-});
-
-// Al cargar la página, verifica sesión y carga los productos
-document.addEventListener("DOMContentLoaded", () => {
-    if (!verificarAutenticacion()) return;
-    
-    cargarArticulos();
+    await cargarCarrito();
+    pintarArticulos(listaArticulos);
     actualizarContador();
     
-    if (searchInput) {
-        searchInput.addEventListener('input', filtrarTodo);
+    Swal.fire({
+      title: '¡Añadido!',
+      text: `${prod.name} al carrito`,
+      icon: 'success',
+      timer: 1000,
+      showConfirmButton: false
+    });
+  } catch (error) {
+    // Fallback a localStorage si hay error
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+    const existente = carrito.find(item => item.name === prod.name);
+
+    if (existente) {
+      existente.cantidad++;
+    } else {
+      carrito.push({
+        id: prod.id,
+        name: prod.name,
+        price_crc: prod.price_crc,
+        image: prod.image,
+        cantidad: 1
+      });
     }
+
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    carritoActual = carrito;
+    pintarArticulos(listaArticulos);
+    actualizarContador();
+    
+    Swal.fire({
+      title: '¡Añadido!',
+      text: `${prod.name} al carrito`,
+      icon: 'success',
+      timer: 1000,
+      showConfirmButton: false
+    });
+  }
+}
+
+async function actualizarContador() {
+  const badge = document.getElementById("cartCount");
+  if (!badge) return;
+  
+  try {
+    const response = await fetchWithToken(`${API_URL}/carrito`);
+    const result = await handleResponse(response);
+    const carritoData = result.carrito || result;
+    const items = carritoData.items || [];
+    const total = items.reduce((acc, item) => acc + (item.cantidad || 0), 0);
+    badge.innerText = total;
+  } catch (error) {
+    // Fallback a localStorage
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    const total = carrito.reduce((acc, item) => acc + (item.cantidad || 0), 0);
+    badge.innerText = total;
+  }
+}
+
+// Event listener para recargar carrito cuando la página se muestra (incluye navegación atrás/adelante)
+window.addEventListener('pageshow', async (event) => {
+  if (listaArticulos.length === 0) {
+    // Si listaArticulos está vacío, la página viene del caché, recargar todo
+    await cargarArticulos();
+    await cargarCategorias();
+    await cargarCarrito();
+    actualizarContador();
+  } else {
+    // Si ya tiene productos, solo recargar el carrito y repintar
+    await cargarCarrito();
+    await pintarArticulos(listaArticulos);
+    actualizarContador();
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (!verificarAutenticacion()) return;
+  cargarArticulos();
+  cargarCategorias();
+  cargarCarrito();
+  actualizarContador();
+  
+  // Event listener para búsqueda
+  if (searchInput) {
+    searchInput.addEventListener('input', filtrarProductos);
+  }
 });

@@ -43,19 +43,25 @@
               <li class="nav-item">
                 <a class="nav-link d-flex align-items-center" href="index.html">
                   <i class="fa-regular fa-house me-1"></i> Inicio
-                        </a>
-                    </li>
+                </a>
+              </li>
               <li class="nav-item">
                 <a class="nav-link d-flex align-items-center" href="productos.html">
                   <i class="fa-solid fa-bag-shopping me-1"></i> Productos
-                        </a>
-                    </li>
+                </a>
+              </li>
+              <li class="nav-item" id="adminLinkItem" style="display: none;">
+                <a class="nav-link d-flex align-items-center" href="admin.html" id="adminLink">
+                  <i class="fa-solid fa-gear me-1"></i> Admin
+                </a>
+              </li>
               <li class="nav-item">
                 <button class="btn btn-outline-danger btn-sm" onclick="logout()">
                   <i class="fa-solid fa-right-from-bracket me-1"></i> Cerrar Sesión
                 </button>
               </li>
 
+            </ul>
                 </ul>
           </div>
             </div>
@@ -71,12 +77,23 @@
 
     <div class="mb-4">
 
-        <input 
-            type="text"
-            id="searchInput"
-            class="form-control search-bar"
-            placeholder="Búsqueda"
-        >
+        <div class="d-flex gap-2">
+            <input 
+                type="text"
+                id="searchInput"
+                class="form-control search-bar"
+                placeholder="Búsqueda"
+            >
+
+            <div class="dropdown">
+                <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    <i class="fa-solid fa-filter me-1"></i> Filtrar
+                </button>
+                <ul class="dropdown-menu" id="categoriaDropdown">
+                    <li><a class="dropdown-item" href="#" data-categoria="">Todas las categorías</a></li>
+                </ul>
+            </div>
+        </div>
 
         <div id="filtersContainer"
              class="mt-2 d-flex gap-2 flex-wrap">
