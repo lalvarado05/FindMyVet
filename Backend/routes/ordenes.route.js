@@ -97,9 +97,10 @@ router.get('/:id', auth, async (req, res) => {
 
 router.get('/', auth, esAdmin, async (req, res) => {
     try {
-        const { estado } = req.query;
+        const { estado, usuario } = req.query;
         const filtro = {};
         if (estado) filtro.estado = estado;
+        if (usuario) filtro.usuario = usuario;
 
         const ordenes = await Orden.find(filtro)
             .populate('usuario', 'nombre email username')

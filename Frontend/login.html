@@ -13,7 +13,6 @@
 </head>
 
 <body class="bg-light d-flex flex-column min-vh-100">
-  <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
     <div class="container-fluid px-5">
       <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
@@ -48,14 +47,12 @@
     </div>
   </nav>
 
-  <!-- MAIN -->
   <main class="login-main flex-grow-1">
     <div class="container py-5">
       <div class="row justify-content-center">
         <div class="col-lg-8 col-xl-6">
           <div class="card shadow-lg border-0 login-card">
             <div class="card-body p-5">
-              <!-- Pills navs -->
               <ul class="nav nav-pills nav-justified mb-4" id="loginTabs" role="tablist">
                 <li class="nav-item" role="presentation">
                   <button class="nav-link active" id="tab-login" data-bs-toggle="pill" data-bs-target="#pills-login"
@@ -71,26 +68,21 @@
                 </li>
               </ul>
 
-              <!-- Pills content -->
               <div class="tab-content">
-                <!-- Login Tab -->
                 <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
                   <form id="loginForm" novalidate>
-                    <!-- Email/Username input -->
                     <div class="form-outline mb-4">
                       <input type="text" id="loginName" name="loginName" class="form-control" required />
                       <label class="form-label" for="loginName">Email o nombre de usuario</label>
                       <div class="invalid-feedback"></div>
                     </div>
 
-                    <!-- Password input -->
                     <div class="form-outline mb-4">
                       <input type="password" id="loginPassword" name="loginPassword" class="form-control" required />
                       <label class="form-label" for="loginPassword">Contraseña</label>
                       <div class="invalid-feedback"></div>
                     </div>
 
-                    <!-- 2 column grid layout -->
                     <div class="row mb-4">
                       <div class="col-md-6 d-flex justify-content-center">
                         <div class="form-check">
@@ -103,57 +95,54 @@
                       </div>
                     </div>
 
-                    <!-- Submit button -->
                     <button type="submit" class="btn btn-primary btn-block w-100 mb-4 login-submit-btn">
                       Iniciar Sesión
                     </button>
 
-                    <!-- Register link -->
                     <div class="text-center">
                       <p class="mb-0">¿No tienes cuenta? <a href="#!" class="text-decoration-none switch-tab" data-tab="register">Regístrate</a></p>
                     </div>
                   </form>
                 </div>
 
-                <!-- Register Tab -->
                 <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
                   <form id="registerForm" novalidate>
-                    <!-- Name input -->
                     <div class="form-outline mb-4">
                       <input type="text" id="registerName" name="registerName" class="form-control" required />
                       <label class="form-label" for="registerName">Nombre completo</label>
                       <div class="invalid-feedback"></div>
                     </div>
 
-                    <!-- Username input -->
+                    <div class="form-outline mb-4">
+                      <input type="text" cedula="registerId" name="registerId" class="form-control" required minlength="9" maxlength="9" oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
+                      <label class="form-label" for="registerId">Identificación</label>
+                      <div class="invalid-feedback"></div>
+                    </div>
+
                     <div class="form-outline mb-4">
                       <input type="text" id="registerUsername" name="registerUsername" class="form-control" required />
                       <label class="form-label" for="registerUsername">Nombre de usuario</label>
                       <div class="invalid-feedback"></div>
                     </div>
 
-                    <!-- Email input -->
                     <div class="form-outline mb-4">
                       <input type="email" id="registerEmail" name="registerEmail" class="form-control" required />
                       <label class="form-label" for="registerEmail">Email</label>
                       <div class="invalid-feedback"></div>
                     </div>
 
-                    <!-- Password input -->
                     <div class="form-outline mb-4">
                       <input type="password" id="registerPassword" name="registerPassword" class="form-control" required minlength="6" />
                       <label class="form-label" for="registerPassword">Contraseña</label>
                       <div class="invalid-feedback"></div>
                     </div>
 
-                    <!-- Repeat Password input -->
                     <div class="form-outline mb-4">
                       <input type="password" id="registerRepeatPassword" name="registerRepeatPassword" class="form-control" required />
                       <label class="form-label" for="registerRepeatPassword">Repetir contraseña</label>
                       <div class="invalid-feedback"></div>
                     </div>
 
-                    <!-- Checkbox -->
                     <div class="form-check d-flex justify-content-center mb-4">
                       <input class="form-check-input me-2" type="checkbox" value="" id="registerCheck" required />
                       <label class="form-check-label" for="registerCheck">
@@ -162,12 +151,10 @@
                       <div class="invalid-feedback">Debes aceptar los términos y condiciones</div>
                     </div>
 
-                    <!-- Submit button -->
                     <button type="submit" class="btn btn-primary btn-block w-100 mb-3 register-submit-btn">
                       Registrarse
                     </button>
 
-                    <!-- Login link -->
                     <div class="text-center">
                       <p class="mb-0">¿Ya tienes cuenta? <a href="#!" class="text-decoration-none switch-tab" data-tab="login">Inicia sesión</a></p>
                     </div>
@@ -181,7 +168,6 @@
     </div>
   </main>
 
-  <!-- FOOTER -->
   <footer class="bg-light border-top mt-5">
     <div class="container py-4">
       <div class="text-center text-muted small">

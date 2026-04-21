@@ -1,0 +1,86 @@
+@use 'variables' as *
+
+.vista-producto-container
+  padding-top: 190px
+  padding-bottom: 50px
+
+.volver
+  margin-bottom: 10px
+
+.btn-volver
+  padding: 10px 20px
+  font-weight: 500
+  color: $color-azul-grisaceo !important
+  border: 1px solid $color-borde !important
+  border-radius: 60px !important
+  background: white !important
+  transition: all 0.3s ease
+  &:hover
+    background: #f8f9fa !important
+    transform: translateX(-5px)
+
+.detalle-card
+  border-radius: $radius-lg
+  border: none
+  background: white
+  box-shadow: $sombra-card
+  overflow: hidden
+  padding: 40px
+
+.img-container
+  background-color: #fcfcfc
+  border-radius: $radius-md
+  padding: 30px
+  display: flex
+  align-items: center
+  justify-content: center
+  border: 1px solid #f0f0f0
+  img
+    max-height: 450px
+    object-fit: contain
+
+.detalle-info
+  padding-left: 30px
+  .badge-categoria
+    display: inline-block
+    background-color: #e2ff8d
+    color: #000
+    padding: 6px 16px
+    border-radius: 50px
+    font-weight: 600
+    font-size: 0.85rem
+    margin-bottom: 15px
+  h1
+    font-size: 2.8rem
+    font-weight: 800
+    margin-bottom: 15px
+    color: #1a1a1a
+  .detalle-precio
+    font-size: 2.2rem
+    color: $color-verde
+    font-weight: 700
+    margin-bottom: 25px
+  .detalle-descripcion
+    font-size: 1.1rem
+    line-height: 1.7
+    color: $color-azul-grisaceo
+    margin-bottom: 35px
+
+.btn-agregar-detalle
+  background-color: black !important
+  color: white !important
+  border: none
+  border-radius: 50px !important
+  padding: 18px 40px
+  font-weight: 700
+  font-size: 1.1rem
+  display: flex
+  align-items: center
+  justify-content: center
+  gap: 12px
+  transition: all 0.3s ease
+  box-shadow: $sombra-suave
+  &:hover
+    background-color: #333 !important
+    transform: translateY(-3px)
+    box-shadow: $sombra-card-hover
