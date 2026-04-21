@@ -1,5 +1,5 @@
-// Verifica que el usuario tenga sesión activa
-function verificarAutenticacion() {
+// Redirige al login si el usuario no tiene sesión activa
+function requireLogin() {
     const token = localStorage.getItem('token');
     if (!token) {
         window.location.href = 'login.html';
@@ -347,7 +347,7 @@ window.addEventListener('pageshow', async (event) => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  if (!verificarAutenticacion()) return;
+  if (!requireLogin()) return;
   cargarArticulos();
   cargarCategorias();
   cargarCarrito();

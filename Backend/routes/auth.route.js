@@ -9,7 +9,7 @@ router.post('/registro', async (req, res) => {
 
     if (!nombre || !username || !email || !password || !cedula) {
         return res.status(400).json({
-            message: 'Los campos nombre, username, email, password y cedula son requeridos.',
+            message: 'Los campos nombre, nombre de usuario, correo, contraseña y cedula son requeridos.',
             estado: 'error'
         });
     }
@@ -17,12 +17,12 @@ router.post('/registro', async (req, res) => {
     try {
         const existeEmail = await Usuario.findOne({ email });
         if (existeEmail) {
-            return res.status(400).json({ message: 'El email ya está registrado.', estado: 'error' });
+            return res.status(400).json({ message: 'El correo ya está registrado.', estado: 'error' });
         }
 
         const existeUsername = await Usuario.findOne({ username });
         if (existeUsername) {
-            return res.status(400).json({ message: 'El username ya está registrado.', estado: 'error' });
+            return res.status(400).json({ message: 'El nombre de usuario ya está registrado.', estado: 'error' });
         }
 
         const usuario = new Usuario({ nombre, username, email, password, cedula, activo: true });
@@ -52,7 +52,7 @@ router.post('/login', async (req, res) => {
 
     if (!login || !password) {
         return res.status(400).json({
-            message: 'Los campos login y password son requeridos.',
+            message: 'Los campos de usuario/correo y contraseña son requeridos.',
             estado: 'error'
         });
     }

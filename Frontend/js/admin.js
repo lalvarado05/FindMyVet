@@ -1,5 +1,5 @@
-// Verificar autenticación y rol de admin
-function verificarAutenticacion() {
+// Verificar que el usuario es admin, redirige si no
+function verificarAdmin() {
     const usuario = JSON.parse(localStorage.getItem('usuarioActual'));
     if (!usuario || usuario.rol !== 'admin') {
         Swal.fire({
@@ -588,9 +588,7 @@ async function agregarStock() {
 
 // ==================== INICIALIZACIÓN ====================
 document.addEventListener('DOMContentLoaded', () => {
-    if (!verificarAutenticacion()) return;
-    
-    verificarAutenticacion();
+    if (!verificarAdmin()) return;
     
     // Event listeners para filtros de órdenes
     document.getElementById('filtroEstadoOrden').addEventListener('change', cargarOrdenes);

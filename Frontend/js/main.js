@@ -67,6 +67,7 @@ function verificarAutenticacion() {
     const adminPanel = document.querySelector('#adminPanel');
     const adminLinkItem = document.querySelector('#adminLinkItem');
     const adminLink = document.querySelector('#adminLink');
+    const misOrdenesItem = document.querySelector('#misOrdenesItem');
 
     if (usuario) {
         // Usuario autenticado
@@ -75,12 +76,13 @@ function verificarAutenticacion() {
         if (logoutItem) logoutItem.style.display = 'block';
         if (logoutBtnItem) logoutBtnItem.style.display = 'block';
         if (usuarioNombre) usuarioNombre.textContent = `Hola, ${usuario.nombre}`;
-        
+        if (misOrdenesItem) misOrdenesItem.style.display = 'block';
+
         // Mostrar panel de admin si es admin
         if (adminPanel && usuario.rol === 'admin') {
             adminPanel.style.display = 'block';
         }
-        
+
         // Mostrar link de admin si es admin
         if (adminLinkItem && usuario.rol === 'admin') {
             adminLinkItem.style.display = 'block';
@@ -93,6 +95,7 @@ function verificarAutenticacion() {
         if (logoutBtnItem) logoutBtnItem.style.display = 'none';
         if (adminPanel) adminPanel.style.display = 'none';
         if (adminLinkItem) adminLinkItem.style.display = 'none';
+        if (misOrdenesItem) misOrdenesItem.style.display = 'none';
         if (usuarioNombre) usuarioNombre.textContent = '';
     }
 }

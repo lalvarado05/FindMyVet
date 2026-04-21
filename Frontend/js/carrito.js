@@ -115,9 +115,24 @@ async function procederAlPago() {
 
     Swal.fire({
         title: '¡Orden realizada!',
-        text: '¡Gracias por confiar en PetZone!',
         icon: 'success',
-        confirmButtonText: 'Genial',
+        html: `
+            <p class="mb-3">¡Gracias por confiar en PetZone!</p>
+            <p class="mb-2 text-start"><strong>Para completar tu pedido, envíanos el comprobante de pago a:</strong></p>
+            <div class="d-flex flex-column gap-2 text-start">
+                <a href="mailto:petzone@gmail.com?subject=Comprobante%20de%20pago%20-%20PetZone"
+                   class="btn btn-outline-primary btn-sm d-flex align-items-center justify-content-center gap-2">
+                    <i class="fa-solid fa-envelope"></i> petzone@gmail.com
+                </a>
+                <a href="https://wa.me/50683650601?text=Hola%20PetZone%2C%20adjunto%20mi%20comprobante%20de%20pago."
+                   target="_blank" rel="noopener"
+                   class="btn btn-outline-success btn-sm d-flex align-items-center justify-content-center gap-2">
+                    <i class="fa-brands fa-whatsapp"></i> +506 8365 0601
+                </a>
+            </div>
+            <p class="small text-muted mt-3 mb-0">Tu orden quedará en estado <strong>PENDIENTE</strong> hasta confirmar el pago.</p>
+        `,
+        confirmButtonText: 'Entendido',
         confirmButtonColor: '#198754'
     }).then(async () => {
         try {
@@ -125,7 +140,7 @@ async function procederAlPago() {
             await fetchWithToken(`${API_URL}/carrito/vaciar`, { method: 'DELETE' });
         } catch (e) {}
         localStorage.removeItem("carrito");
-        window.location.href = "productos.html";
+        window.location.href = "mis-ordenes.html";
     });
 }
 

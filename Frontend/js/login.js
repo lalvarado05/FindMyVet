@@ -25,7 +25,14 @@ async function handleResponse(response) {
     return data;
 }
 
-document.addEventListener('DOMContentLoaded', initAuth);
+document.addEventListener('DOMContentLoaded', () => {
+    const usuario = localStorage.getItem('usuarioActual');
+    if (usuario) {
+        window.location.href = 'index.html';
+        return;
+    }
+    initAuth();
+});
 
 const loginForm = document.querySelector('#loginForm');
 const loginNameInput = document.querySelector('#loginName');
@@ -293,12 +300,7 @@ function initAuth() {
                     timer: 2000,
                     showConfirmButton: false
                 });
-                registerForm.reset();
-                const loginTab = document.querySelector('#tab-login');
-                if (loginTab) {
-                    const loginTabInstance = new bootstrap.Tab(loginTab);
-                    loginTabInstance.show();
-                }
+                window.location.href = 'productos.html';
             } catch (error) {
                 Swal.fire({
                     icon: 'error',
